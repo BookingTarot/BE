@@ -11,8 +11,9 @@
 		/// <param name="services"></param>
 		public static void AddPackage(this IServiceCollection services)
 		{
-			//Add other service in nuget package
-		}
+            //Add nunet package
+           services.AddSwaggerGen();
+        }
 
 		/// <summary>
 		/// Create dependencies for service (interface) & service (class) or repository (interface) & repository (class)
@@ -20,7 +21,7 @@
 		/// <param name="services"></param>
 		public static void AddMasterServices(this IServiceCollection services)
 		{
-			// Add dependency injection for class and interface
+			//Add injecting about class and interface
 			//EX:
 			//services.AddScoped<IAccountRepository, AccountRepository>();
 			//services.AddScoped<IAccountService, AccountService>();
