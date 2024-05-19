@@ -14,8 +14,6 @@ namespace BusinessObjects.Models
         public int CustomerId { get; set; }
         public int TarotReaderId { get; set; }
         public DateTime? Date { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
         public bool? Status { get; set; }
         public string? Description { get; set; }
         public int ScheduleId { get; set; }

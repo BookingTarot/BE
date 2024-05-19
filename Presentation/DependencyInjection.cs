@@ -1,4 +1,7 @@
-﻿namespace Presentation
+﻿using Repositories;
+using Services;
+
+namespace Presentation
 {
 	/// <summary>
 	/// Functions for create dependency injections
@@ -25,6 +28,10 @@
 			//EX:
 			//services.AddScoped<IAccountRepository, AccountRepository>();
 			//services.AddScoped<IAccountService, AccountService>();
+			services.AddScoped<ITarotReaderRepository, TarotReaderRepository>();
+			services.AddScoped<ITarotReaderService, TarotReaderService>();
+			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IUserService, UserService>();
 		}
 	}
 
