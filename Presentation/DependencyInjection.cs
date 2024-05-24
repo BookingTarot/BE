@@ -15,7 +15,21 @@ namespace Presentation
 		public static void AddPackage(this IServiceCollection services)
 		{
             //Add nunet package
-           services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000") // Update with your React app URL
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowCredentials();
+                    });
+            });
+
+
+
+            services.AddSwaggerGen();
         }
 
 		/// <summary>
