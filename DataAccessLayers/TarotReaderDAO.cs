@@ -30,7 +30,7 @@ namespace DataAccessLayers
 
         public List<TarotReader> getAll() {
             return context.TarotReaders
-                //.Include(tr => tr.User)
+                
                 .Select(tr => new TarotReader
                 {
                     TarotReaderId = tr.TarotReaderId,
