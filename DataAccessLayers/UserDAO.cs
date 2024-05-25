@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.DTOs;
 using BusinessObjects.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace DataAccessLayers
         public List<User> GetUsers()
         {
             return context.Users.Where(x => x.IsActive == true)
+                //.Include(tr => tr.TarotReader)
+                //.Include(r => r.Role)
                 .ToList();
         }
 

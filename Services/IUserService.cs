@@ -13,6 +13,7 @@ namespace Services
     {
        public User Login(string email, string password);
         public bool Register(RegisterRequest registerRequest);
+        public List<User> GetAll();
     }
     public class UserService : IUserService
     {
@@ -20,6 +21,11 @@ namespace Services
         public UserService(IUserRepository repo)
         {
             _repo = repo;
+        }
+
+        public List<User> GetAll()
+        {
+            return _repo.GetAll();
         }
 
         public User Login(string email, string password)
@@ -31,5 +37,7 @@ namespace Services
         {
             return _repo.Register(registerRequest);
         }
+
+        
     }
 }
