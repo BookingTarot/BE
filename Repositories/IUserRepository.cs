@@ -13,9 +13,15 @@ namespace Repositories
     {
         public User Login(string email, string password);
         public bool Register(RegisterRequest registerRequest);
+        public List<User> GetAll();
     }
     public class UserRepository : IUserRepository
     {
+        public List<User> GetAll()
+        {
+            return UserDAO.Instance.GetUsers();
+        }
+
         public User Login(string email, string password)
         {
             return UserDAO.Instance.Login(email, password);

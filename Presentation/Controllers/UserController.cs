@@ -16,6 +16,16 @@ namespace Presentation.Controllers
             _service = service;
         }
 
+        [HttpGet()]
+        public IActionResult GetListUser()
+        {
+            var reponse = _service.GetAll();
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
         [HttpPost("login")]
         public IActionResult Login(LoginRequest loginRequest)
         {
