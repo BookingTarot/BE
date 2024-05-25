@@ -80,7 +80,7 @@ namespace BusinessObjects.Models
             {
                 entity.ToTable("Customer");
 
-                entity.HasIndex(e => e.UserId, "UQ__Customer__1788CC4DF17931D3")
+                entity.HasIndex(e => e.UserId, "UQ__Customer__1788CC4DD23DF8D3")
                     .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(1000);
@@ -173,7 +173,7 @@ namespace BusinessObjects.Models
             {
                 entity.ToTable("TarotReader");
 
-                entity.HasIndex(e => e.UserId, "UQ__TarotRea__1788CC4D332FD7DB")
+                entity.HasIndex(e => e.UserId, "UQ__TarotRea__1788CC4DB5111B67")
                     .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(4000);
@@ -194,7 +194,7 @@ namespace BusinessObjects.Models
                         r => r.HasOne<TarotReader>().WithMany().HasForeignKey("TarotReaderId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__TarotRead__Tarot__44FF419A"),
                         j =>
                         {
-                            j.HasKey("TarotReaderId", "SessionTypeId").HasName("PK__TarotRea__AF7828A962BBDB7F");
+                            j.HasKey("TarotReaderId", "SessionTypeId").HasName("PK__TarotRea__AF7828A92A89BDCE");
 
                             j.ToTable("TarotReaderSessionType");
                         });
