@@ -45,8 +45,27 @@ namespace DataAccessLayers
                         LastName = tr.User.LastName,
                         FirstName = tr.User.FirstName,
                        
-                    }
-                    
+                    },
+                    Schedules = tr.Schedules.Select(tr => new Schedule
+                    {
+                        ScheduleId = tr.ScheduleId,
+                        Date = tr.Date,
+                        StartTime = tr.StartTime, EndTime = tr.EndTime,
+
+
+                    }).ToList()
+                    ,
+                    SessionTypes = tr.SessionTypes.Select(st => new SessionType
+                    {
+                        SessionTypeId = st.SessionTypeId,
+                        Name = st.Name,
+                        Description = st.Description,
+                        Price = st.Price,
+                        Status = st.Status,
+                        Duration = st.Duration
+                    }).ToList()
+
+
                 })
                 .ToList();
         }
