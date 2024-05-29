@@ -51,6 +51,7 @@ namespace DataAccessLayers
                         ScheduleId = tr.ScheduleId,
                         Date = tr.Date,
                         StartTime = tr.StartTime, EndTime = tr.EndTime,
+                        CustomerId = tr.CustomerId,
 
 
                     }).ToList()
