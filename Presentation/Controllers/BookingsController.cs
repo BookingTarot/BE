@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessObjects.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -18,6 +19,16 @@ namespace Presentation.Controllers
         public IActionResult GetBookings()
         {
             return Ok(_service.GetBookings());
+        }
+
+        [HttpPost]
+        public IActionResult AddBooking([FromBody] BookingRequest booking)
+        {
+            if (_service.AddBooking(booking))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

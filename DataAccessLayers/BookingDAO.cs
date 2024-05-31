@@ -81,5 +81,19 @@ namespace DataAccessLayers
                     
                 }).ToList();
         }
+
+        public bool AddBooking(Booking booking)
+        {
+            try
+            {
+                context.Bookings.Add(booking);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

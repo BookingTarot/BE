@@ -48,6 +48,8 @@ namespace Presentation
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IBookingRepository, BookingRepository>();
 			services.AddScoped<IBookingService, BookingService>();
+			services.AddScoped<IScheduleRepository, ScheduleRepository>();
+			
 		}
 	}
 
