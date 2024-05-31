@@ -46,6 +46,8 @@ namespace Presentation
 			services.AddScoped<ITarotReaderService, TarotReaderService>();
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IBookingRepository, BookingRepository>();
+			services.AddScoped<IBookingService, BookingService>();
 		}
 	}
 
