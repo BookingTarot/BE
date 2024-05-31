@@ -11,6 +11,7 @@ namespace Repositories
     public interface ITarotReaderRepository
     {
         public List<TarotReader> getAll();
+        public TarotReader getTarotReaderById(int id);
     }
 
     public class TarotReaderRepository : ITarotReaderRepository
@@ -18,6 +19,11 @@ namespace Repositories
         public List<TarotReader> getAll()
         {
             return TarotReaderDAO.Instance.getAll();
+        }
+
+        public TarotReader getTarotReaderById(int id)
+        {
+            return TarotReaderDAO.Instance.GetTarotReaderById(id);
         }
     }
 }

@@ -70,6 +70,44 @@ namespace DataAccessLayers
                 })
                 .ToList();
         }
-
+        public TarotReader GetTarotReaderById(int id)
+        {
+            return context.TarotReaders
+                .Where(tr => tr.TarotReaderId == id)
+                .Select(tr => new TarotReader
+                {
+                    TarotReaderId = tr.TarotReaderId,
+                    UserId = tr.UserId,
+                    Introduction = tr.Introduction,
+                    Description = tr.Description,
+                    Image = tr.Image,
+                    Status = tr.Status,
+                    User = new User
+                    {
+                        UserId = tr.User.UserId,
+                        LastName = tr.User.LastName,
+                        FirstName = tr.User.FirstName,
+                    },
+                    Schedules = tr.Schedules.Select(tr => new Schedule
+                    {
+                        ScheduleId = tr.ScheduleId,
+                        Date = tr.Date,
+                        StartTime = tr.StartTime,
+                        EndTime = tr.EndTime,
+                        CustomerId = tr.CustomerId,
+                    }).ToList()
+                    ,
+                    SessionTypes = tr.SessionTypes.Select(st => new SessionType
+                    {
+                        SessionTypeId = st.SessionTypeId,
+                        Name = st.Name,
+                        Description = st.Description,
+                        Price = st.Price,
+                        Status = st.Status,
+                        Duration = st.Duration
+                    }).ToList()
+                })
+                .FirstOrDefault();
+        }
     }
 }

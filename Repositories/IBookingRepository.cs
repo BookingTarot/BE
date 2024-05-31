@@ -11,12 +11,19 @@ namespace Repositories
     public interface IBookingRepository
     {
         public List<Booking> GetBookings();
+        public bool AddBooking(Booking booking);
     }
     public class BookingRepository : IBookingRepository
     {
+        public bool AddBooking(Booking booking)
+        {
+            return BookingDAO.Instance.AddBooking(booking);
+        }
+
         public List<Booking> GetBookings()
         {
             return BookingDAO.Instance.GetBookings();
         }
+
     }
 }
