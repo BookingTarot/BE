@@ -1,5 +1,4 @@
-﻿﻿
-ALTER DATABASE [TarotBooking] SET COMPATIBILITY_LEVEL = 150
+﻿ALTER DATABASE [TarotBooking] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
@@ -100,6 +99,8 @@ CREATE TABLE [dbo].[Booking](
 	[Status] [bit] NULL,
 	[Description] [nvarchar](1000) NULL,
 	[ScheduleId] [int] NOT NULL,
+	[SessionTypeId] [int] not null unique,
+	
 PRIMARY KEY CLUSTERED 
 (
 	[BookingId] ASC
@@ -218,6 +219,8 @@ CREATE TABLE [dbo].[TarotReader](
 	[UserId] [int] NOT NULL Unique,
 	[Introduction] [nvarchar](500) NULL,
 	[Description] [nvarchar](4000) NULL,
+	[Experience] [nvarchar](max) NULL,
+    [Kind] [nvarchar](max) NULL,
 	[Image] [varbinary](max) NULL,
 	[Status] [bit] NULL,
 PRIMARY KEY CLUSTERED 
@@ -280,9 +283,9 @@ SET IDENTITY_INSERT [dbo].[Bills] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Booking] ON 
 
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId]) VALUES (1, 1, 1, CAST(N'2024-05-20' AS Date),250, 1, N'General Reading', 1)
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId]) VALUES (2, 2, 1, CAST(N'2024-05-20' AS Date),400, 1, N'Love Reading', 2)
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId]) VALUES (3, 3, 2, CAST(N'2024-05-20' AS Date),500, 1, N'Career Reading', 3)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (1, 1, 1, CAST(N'2024-05-20' AS Date),250, 1, N'General Reading', 1, 1)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (2, 2, 1, CAST(N'2024-05-20' AS Date),400, 1, N'Love Reading', 2, 2)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (3, 3, 2, CAST(N'2024-05-20' AS Date),500, 1, N'Career Reading', 3, 3)
 SET IDENTITY_INSERT [dbo].[Booking] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Customer] ON 
@@ -352,13 +355,21 @@ INSERT [dbo].[SessionType] ([SessionTypeId], [Name], [Duration], [Description], 
 INSERT [dbo].[SessionType] ([SessionTypeId], [Name], [Duration], [Description], [Price], [Status]) VALUES (9, N'Buổi học Tarot', 60, N'Phiên cố vấn được cá nhân hóa, được điều chỉnh để đáp ứng mức độ kinh nghiệm và mục tiêu của bạn, được tổ chức trên Tellory bằng video trực tiếp.', 550, 1)
 SET IDENTITY_INSERT [dbo].[SessionType] OFF
 GO
-SET IDENTITY_INSERT [dbo].[TarotReader] ON 
+SET IDENTITY_INSERT [dbo].[TarotReader] ON;
 
-INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Image], [Status]) VALUES (1, 7, N'Xin chào! Tôi là Ánh Nguyệt, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', N'Mỗi readers của X-Tarot đều có một dấu ấn riêng, và ở reader Zoro phong cách nhẹ nhàng, cởi mở, dí dỏm đã trở thành một nét đặc trưng không lẫn vào đâu được. Mỗi khi tiếp xúc với anh, bạn sẽ luôn cảm thấy vô cùng thoải mái, dễ chịu, cảm giác như đã quen biết tự bao giờ. Và rồi nếu bạn có lỡ bay lên mây một chút, rồi choáng ngợp đôi chút bởi ấn tượng ban đầu về sự hoạt bát, phóng khoáng với đôi phần lãng tử của anh, thì có lẽ bạn cũng sẽ lại phải bất ngờ một chút, giật mình đôi chút mà hạ xuống dưới đất bởi cảm giác chân thật mà anh đưa lại lúc về sau.
+INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Image], [Status], [Experience], [Kind]) 
+VALUES 
+(1, 7, N'Xin chào! Tôi là Ánh Nguyệt, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', 
+N'Mỗi readers của X-Tarot đều có một dấu ấn riêng, và ở reader Zoro phong cách nhẹ nhàng, cởi mở, dí dỏm đã trở thành một nét đặc trưng không lẫn vào đâu được. Mỗi khi tiếp xúc với anh, bạn sẽ luôn cảm thấy vô cùng thoải mái, dễ chịu, cảm giác như đã quen biết tự bao giờ. Và rồi nếu bạn có lỡ bay lên mây một chút, rồi choáng ngợp đôi chút bởi ấn tượng ban đầu về sự hoạt bát, phóng khoáng với đôi phần lãng tử của anh, thì có lẽ bạn cũng sẽ lại phải bất ngờ một chút, giật mình đôi chút mà hạ xuống dưới đất bởi cảm giác chân thật mà anh đưa lại lúc về sau.
 Mặc dù sở hữu rất nhiều bộ bài Tarot, nhưng anh ưa thích đồng hành cùng Legacy of the Divine Tarot hơn cả – bộ bài vừa có ngôn ngữ hình ảnh rất dễ hiểu, sâu sắc lại vừa có sức mạnh thứ hai về hệ thống chiêm tinh học gắn kèm vào. Cũng phải thôi vì tác giả của Legacy là một giảng viên đồ hoạ, nét vẽ của ông vừa rất thật lại vừa rất sâu. Và đó cũng chính là con đường mà reader Zoro chọn khi tiếp cận với các querents của mình vậy. Thẳng thắn, rõ ràng, đầy đủ, không vòng vèo, đưa lối, ấy luôn là cách anh dùng để đưa thông tin tới querent, để cùng họ nhìn chi tiết hơn câu chuyện rắc rối của bản thân, hiểu rõ hơn về từng góc cạnh của vấn đề, và cuối cùng – nhận ra đâu sẽ là điểm đặt chân kế tiếp của mình.
-Còn bạn, bạn đã biết phải book event nào tiếp theo cho mình rồi chứ?', 0x4F, 1)
-INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Image], [Status]) VALUES (2, 8, N'Xin chào! Tôi là Minh Đăng, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', N'Nổi tiếng với những lần đọc chính xác và sâu sắc', 0x4F, 1)
-SET IDENTITY_INSERT [dbo].[TarotReader] OFF
+Còn bạn, bạn đã biết phải book event nào tiếp theo cho mình rồi chứ?', 
+0x4F, 1, N'5 years', N'Psychic'),
+
+(2, 8, N'Xin chào! Tôi là Minh Đăng, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', 
+N'Nổi tiếng với những lần đọc chính xác và sâu sắc', 0x4F, 1, N'3 years', N'Clairvoyant');
+
+SET IDENTITY_INSERT [dbo].[TarotReader] OFF;
+
 GO
 INSERT [dbo].[TarotReaderSessionType] ([TarotReaderId], [SessionTypeId]) VALUES (1, 1)
 INSERT [dbo].[TarotReaderSessionType] ([TarotReaderId], [SessionTypeId]) VALUES (1, 2)
@@ -418,6 +429,9 @@ REFERENCES [dbo].[TarotReader] ([TarotReaderId])
 GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([RoleId])
 REFERENCES [dbo].[Role] ([RoleId])
+Go
+ALTER TABLE [dbo].[Booking]
+WITH CHECK ADD FOREIGN KEY ([SessionTypeId]) REFERENCES [dbo].[SessionType]([SessionTypeId])
 GO
 USE [master]
 GO
