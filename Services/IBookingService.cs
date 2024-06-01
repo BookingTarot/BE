@@ -1,4 +1,5 @@
-﻿using BusinessObjects.DTOs;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.DTOs.Response;
 using BusinessObjects.Models;
 using Repositories;
 using System;
@@ -11,7 +12,7 @@ namespace Services
 {
     public interface IBookingService
     {
-        public List<Booking> GetBookings();
+        public List<BookingResponse> GetBookings();
         public bool AddBooking(BookingRequest booking);
     }
     public class BookingService : IBookingService
@@ -26,9 +27,29 @@ namespace Services
             _tarotReaderRepo = tarotReaderRepo;
         }
 
-        public List<Booking> GetBookings()
+        public List<BookingResponse> GetBookings()
         {
-            return _repo.GetBookings();
+            var bookings = _repo.GetBookings();
+            List<BookingResponse> bookingResponses = new List<BookingResponse>();
+            foreach (var booking in bookings)
+            {
+                BookingResponse bookingResponse = new BookingResponse
+                {
+                    BookingId = booking.BookingId,
+                    CustomerName = booking.Customer.User.FirstName + " " + booking.Customer.User.LastName,
+                    Age = DateTime.Now.Year - booking.Customer.User.DateOfBirth.Value.Year,
+                    Gender = booking.Customer.User.Gender,
+                    PhoneNumber = booking.Customer.User.PhoneNumber,
+                    Date = booking.Date.Value,
+                    StartTime = booking.Schedule.StartTime.Value,
+                    EndTime = booking.Schedule.EndTime.Value,
+                    SessionTypeName = booking.SessionType.Name,
+                    Status = booking.Status == true ? "Confirmed" : "Pending"
+
+                };
+                bookingResponses.Add(bookingResponse);
+            }
+            return bookingResponses;
         }
 
         public bool AddBooking(BookingRequest booking)
@@ -54,7 +75,8 @@ namespace Services
                     Amount = booking.Amount,
                     Status = true,
                     Description = booking.Description,
-                    ScheduleId = schedule.ScheduleId
+                    ScheduleId = schedule.ScheduleId,
+                    SessionTypeId = booking.SessionTypeId
                 };
                 return _repo.AddBooking(newBooking);
             }

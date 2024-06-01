@@ -17,6 +17,8 @@ namespace BusinessObjects.Models
         public int UserId { get; set; }
         public string? Introduction { get; set; }
         public string? Description { get; set; }
+        public string? Experience { get; set; }
+        public string? Kind { get; set; }
         public byte[]? Image { get; set; }
         public bool? Status { get; set; }
 

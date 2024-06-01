@@ -1,4 +1,4 @@
-﻿using BusinessObjects.DTOs;
+﻿using BusinessObjects.DTOs.Request;
 using BusinessObjects.Models;
 using Repositories;
 using System;
