@@ -17,6 +17,8 @@ namespace BusinessObjects.Models
         public double? Price { get; set; }
         public bool? Status { get; set; }
 
+        public virtual Booking? Booking { get; set; }
+
         public virtual ICollection<TarotReader> TarotReaders { get; set; }
     }
 }

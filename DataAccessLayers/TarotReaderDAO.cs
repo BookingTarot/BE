@@ -37,6 +37,8 @@ namespace DataAccessLayers
                     UserId = tr.UserId,
                     Introduction = tr.Introduction,
                     Description = tr.Description,
+                    Kind = tr.Kind,
+                    Experience = tr.Experience,
                     Image = tr.Image,
                     Status = tr.Status,
                     User = new User
@@ -46,12 +48,24 @@ namespace DataAccessLayers
                         FirstName = tr.User.FirstName,
                        
                     },
-                    Schedules = tr.Schedules.Select(tr => new Schedule
+                    Schedules = tr.Schedules.Select(sc => new Schedule
                     {
-                        ScheduleId = tr.ScheduleId,
-                        Date = tr.Date,
-                        StartTime = tr.StartTime, EndTime = tr.EndTime,
-                        CustomerId = tr.CustomerId,
+                        ScheduleId = sc.ScheduleId,
+                        Date = sc.Date,
+                        StartTime = sc.StartTime, EndTime = sc.EndTime,
+                        Customer = new Customer
+                        {
+                            CustomerId = sc.Customer.CustomerId,
+                            UserId = sc.Customer.UserId,
+                            User = new User
+                            {
+                                UserId = sc.Customer.User.UserId,
+                                LastName = sc.Customer.User.LastName,
+                                FirstName = sc.Customer.User.FirstName,
+                               
+                            }
+                        }
+                        
 
 
                     }).ToList()

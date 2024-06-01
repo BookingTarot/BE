@@ -1,4 +1,4 @@
-﻿using BusinessObjects.DTOs;
+﻿using BusinessObjects.DTOs.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;

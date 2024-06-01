@@ -57,6 +57,15 @@ namespace DataAccessLayers
                             
                         }
                     },
+                    SessionType = new SessionType
+                    {
+                        SessionTypeId = b.SessionType.SessionTypeId,
+                        Name = b.SessionType.Name,
+                        Description = b.SessionType.Description,
+                        Price = b.SessionType.Price,
+                        Status = b.SessionType.Status,
+                        Duration = b.SessionType.Duration
+                    },
                     Schedule = new Schedule
                     {
                         ScheduleId = b.Schedule.ScheduleId,

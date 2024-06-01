@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessObjects.DTOs
+namespace BusinessObjects.DTOs.Request
 {
     public class RegisterRequest
     {
-        
+
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -17,6 +17,6 @@ namespace BusinessObjects.DTOs
         public string Email { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }
-       
+
     }
 }
