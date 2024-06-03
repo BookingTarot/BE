@@ -14,6 +14,9 @@ namespace Services
     {
         public List<BookingResponse> GetBookings();
         public bool AddBooking(BookingRequest booking);
+        public bool DeleteBooking(int id);
+        public bool UpdateBooking(Booking booking);
+        public Booking GetBooking(int id);
     }
     public class BookingService : IBookingService
     {
@@ -82,6 +85,21 @@ namespace Services
                 return _repo.AddBooking(newBooking);
             }
             return false;
+        }
+
+        public bool DeleteBooking(int id)
+        {
+            return _repo.DeleteBooking(id);
+        }
+
+        public bool UpdateBooking(Booking booking)
+        {
+            return _repo.UpdateBooking(booking);
+        }
+
+        public Booking GetBooking(int id)
+        {
+            return _repo.GetBooking(id);
         }
     }
 }

@@ -123,5 +123,48 @@ namespace DataAccessLayers
                 })
                 .FirstOrDefault();
         }
+
+        public bool Add(TarotReader tarotReader)
+        {
+            try
+            {
+                context.TarotReaders.Add(tarotReader);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var tarotReader = context.TarotReaders.Find(id);
+                context.TarotReaders.Remove(tarotReader);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool Update(TarotReader tarotReader)
+        {
+            try
+            {
+                context.Entry(tarotReader).State = EntityState.Modified;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

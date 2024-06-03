@@ -51,6 +51,9 @@ namespace Presentation
 			services.AddScoped<IScheduleRepository, ScheduleRepository>();
 			services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 			services.AddScoped<IFeedbackService, FeedbackService>();
+			services.AddScoped<IScheduleService, ScheduleService>();
+			services.AddScoped<ISessionTypeRepository, SessionTypeRepository>();
+			services.AddScoped<ISessionTypeService, SessionTypeService>();
 		}
 	}
 
