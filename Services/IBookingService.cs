@@ -54,15 +54,16 @@ namespace Services
 
         public bool AddBooking(BookingRequest booking)
         {
-            
+
             Schedule schedule = new Schedule
             {
-               
+
                 TarotReaderId = booking.TarotReaderId,
                 Date = booking.BookDate,
                 StartTime = booking.StartTime,
                 EndTime = booking.EndTime,
-                CustomerId = booking.CustomerId
+                CustomerId = booking.CustomerId,
+                Status = true
             };
             if (_scheduleRepo.AddSchedule(schedule))
             {

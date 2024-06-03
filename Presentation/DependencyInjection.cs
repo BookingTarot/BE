@@ -49,7 +49,8 @@ namespace Presentation
 			services.AddScoped<IBookingRepository, BookingRepository>();
 			services.AddScoped<IBookingService, BookingService>();
 			services.AddScoped<IScheduleRepository, ScheduleRepository>();
-			
+			services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+			services.AddScoped<IFeedbackService, FeedbackService>();
 		}
 	}
 

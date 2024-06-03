@@ -185,6 +185,7 @@ CREATE TABLE [dbo].[Schedule](
 	[StartTime] [datetime] NULL,
 	[EndTime] [datetime] NULL,
 	[CustomerId] [int] NOT NULL,
+	[Status] [bit] NULL
 PRIMARY KEY CLUSTERED 
 (
 	[ScheduleId] ASC
