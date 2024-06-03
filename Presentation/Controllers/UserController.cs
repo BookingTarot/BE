@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -29,7 +30,7 @@ namespace Presentation.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest loginRequest)
         {
-            var reponse = _service.Login(loginRequest.Email,loginRequest.Password);
+            var reponse = _service.Login(loginRequest.Email, loginRequest.Password);
             if (reponse == null)
             {
                 return NotFound();
@@ -41,6 +42,37 @@ namespace Presentation.Controllers
         public IActionResult Register(RegisterRequest registerRequest)
         {
             var reponse = _service.Register(registerRequest);
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var reponse = _service.GetById(id);
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
+        [HttpPut()]
+        public IActionResult UpdateUser(User user)
+        {
+            var reponse = _service.Update(user);
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var reponse = _service.Delete(id);
             if (reponse == null)
             {
                 return NotFound();

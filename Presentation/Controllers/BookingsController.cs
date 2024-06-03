@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -30,5 +31,31 @@ namespace Presentation.Controllers
             }
             return BadRequest();
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBooking(int id)
+        {
+            if (_service.DeleteBooking(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetBooking(int id)
+        {
+            return Ok(_service.GetBooking(id));
+        }
+        [HttpPut]
+        public IActionResult UpdateBooking([FromBody] Booking booking)
+        {
+            if (_service.UpdateBooking(booking))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
     }
 }

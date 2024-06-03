@@ -27,7 +27,50 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-
+        public List<Schedule> GetAll()
+        {
+            return context.Schedules.ToList();
+        }
+        public Schedule GetScheduleById(int id)
+        {
+            return context.Schedules.Find(id);
+        }
+        public List<Schedule> GetSchedulesByTarotReaderId(int id)
+        {
+            return context.Schedules.Where(s => s.TarotReaderId == id).ToList();
+        }
+        public bool UpdateSchedule(Schedule schedule)
+        {
+            try
+            {
+                var scheduleToUpdate = context.Schedules.Find(schedule.ScheduleId);
+                scheduleToUpdate.Date = schedule.Date;
+                scheduleToUpdate.StartTime = schedule.StartTime;
+                scheduleToUpdate.EndTime = schedule.EndTime;
+                scheduleToUpdate.TarotReaderId = schedule.TarotReaderId;
+                scheduleToUpdate.CustomerId = schedule.CustomerId;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool Delete(int id)
+        {
+            try
+            {
+                var scheduleToDelete = context.Schedules.Find(id);
+                context.Schedules.Remove(scheduleToDelete);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public bool AddSchedule(Schedule schedule)
         {
             try

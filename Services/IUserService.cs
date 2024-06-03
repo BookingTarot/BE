@@ -14,6 +14,10 @@ namespace Services
        public User Login(string email, string password);
         public bool Register(RegisterRequest registerRequest);
         public List<User> GetAll();
+        public User GetById(int id);
+        public bool Update(User user);
+        public bool Delete(int id);
+        public bool Add(User user);
     }
     public class UserService : IUserService
     {
@@ -23,9 +27,24 @@ namespace Services
             _repo = repo;
         }
 
+        public bool Add(User user)
+        {
+            return _repo.Add(user);
+        }
+
+        public bool Delete(int id)
+        {
+            return _repo.Delete(id);
+        }
+
         public List<User> GetAll()
         {
             return _repo.GetAll();
+        }
+
+        public User GetById(int id)
+        {
+            return _repo.GetById(id);
         }
 
         public User Login(string email, string password)
@@ -38,6 +57,9 @@ namespace Services
             return _repo.Register(registerRequest);
         }
 
-        
+        public bool Update(User user)
+        {
+            return _repo.Update(user);
+        }
     }
 }

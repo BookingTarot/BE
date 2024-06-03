@@ -1,14 +1,14 @@
 ﻿using BusinessObjects.Models;
-using DataAccessLayers;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories
+namespace Services
 {
-    public interface IScheduleRepository
+    public interface IScheduleService
     {
         public bool AddSchedule(Schedule schedule);
         public bool UpdateSchedule(Schedule schedule);
@@ -18,36 +18,41 @@ namespace Repositories
         public List<Schedule> GetSchedulesByTarotReaderId(int id);
     }
 
-    public class ScheduleRepository : IScheduleRepository
+    public class ScheduleService : IScheduleService
     {
+        private readonly IScheduleRepository _repo;
+        public ScheduleService(IScheduleRepository repo)
+        {
+            _repo = repo;
+        }
         public bool AddSchedule(Schedule schedule)
         {
-            return ScheduleDAO.Instance.AddSchedule(schedule);
+            return _repo.AddSchedule(schedule);
         }
 
         public bool Delete(int id)
         {
-            return ScheduleDAO.Instance.Delete(id);
+            return _repo.Delete(id);
         }
 
         public List<Schedule> GetAll()
         {
-            return ScheduleDAO.Instance.GetAll();
+           return _repo.GetAll();
         }
 
         public Schedule GetScheduleById(int id)
         {
-           return ScheduleDAO.Instance.GetScheduleById(id);
+           return _repo.GetScheduleById(id);
         }
 
         public List<Schedule> GetSchedulesByTarotReaderId(int id)
         {
-            return ScheduleDAO.Instance.GetSchedulesByTarotReaderId(id);
+            return _repo.GetSchedulesByTarotReaderId(id);
         }
 
         public bool UpdateSchedule(Schedule schedule)
         {
-            return ScheduleDAO.Instance.UpdateSchedule(schedule);
+            return _repo.UpdateSchedule(schedule);
         }
     }
 }

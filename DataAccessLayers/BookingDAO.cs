@@ -27,6 +27,10 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
+        public Booking GetBookingById(int id)
+        {
+            return context.Bookings.Where(b => b.BookingId == id).FirstOrDefault();
+        }
 
         public List<Booking> GetBookings()
         {
@@ -98,6 +102,51 @@ namespace DataAccessLayers
                 context.Bookings.Add(booking);
                 context.SaveChanges();
                 return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateBooking(Booking booking)
+        {
+            try
+            {
+                var bookingToUpdate = context.Bookings.Find(booking.BookingId);
+                if (bookingToUpdate != null)
+                {
+                    bookingToUpdate.CustomerId = booking.CustomerId;
+                    bookingToUpdate.TarotReaderId = booking.TarotReaderId;
+                    bookingToUpdate.Date = booking.Date;
+                    bookingToUpdate.Amount = booking.Amount;
+                    bookingToUpdate.Status = booking.Status;
+                    bookingToUpdate.Description = booking.Description;
+                    bookingToUpdate.ScheduleId = booking.ScheduleId;
+                    bookingToUpdate.SessionTypeId = booking.SessionTypeId;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteBooking(int id)
+        {
+            try
+            {
+                var booking = context.Bookings.Find(id);
+                if (booking != null)
+                {
+                    context.Bookings.Remove(booking);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
