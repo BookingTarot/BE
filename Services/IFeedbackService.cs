@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Services
 {
     public interface  IFeedbackService
     {
-        public bool AddFeedback(Feedback feedback);
+        public bool AddFeedback(FeedBackRequest feedback);
         public List<Feedback> GetFeedbacks();
         public Feedback GetFeedbackById(int id);
-        public bool UpdateFeedback(Feedback feedback);
+        public bool UpdateFeedback(int id,FeedBackRequest feedback);
         public bool DeleteFeedback(int id);
         public List<Feedback> GetFeedbacksByTarotReaderId(int id);
     }
@@ -25,9 +26,19 @@ namespace Services
         {
             _repo = repo;
         }
-        public bool AddFeedback(Feedback feedback)
+        public bool AddFeedback(FeedBackRequest request)
         {
-            return _repo.AddFeedback(feedback);
+            var feedback = new Feedback();
+            feedback.CustomerId = request.CustomerId;
+            feedback.TarotReaderId = request.TarotReaderId;
+            feedback.Rating = request.Rating;
+            feedback.Comments = request.Comments;
+            feedback.Date = DateTime.Now;
+
+
+            _repo.AddFeedback(feedback);
+            return true;
+
         }
 
         public bool DeleteFeedback(int id)
@@ -50,9 +61,18 @@ namespace Services
             return _repo.GetFeedbacksByTarotReaderId(id);
         }
 
-        public bool UpdateFeedback(Feedback feedback)
+        
+
+        public bool UpdateFeedback(int id, FeedBackRequest request)
         {
+            var feedback = _repo.GetFeedbackById(id);
+            feedback.FeedbackId = id;
+            feedback.CustomerId = request.CustomerId;
+            feedback.TarotReaderId = request.TarotReaderId;
+            feedback.Rating = request.Rating;
+            feedback.Comments = request.Comments;
             return _repo.UpdateFeedback(feedback);
+
         }
     }
 }

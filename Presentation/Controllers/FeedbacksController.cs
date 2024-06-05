@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -34,21 +35,23 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddFeedback([FromBody] Feedback feedback)
+        public IActionResult AddFeedback([FromBody] FeedBackRequest feedback)
         {
-            if (_service.AddFeedback(feedback))
+            var response = _service.AddFeedback(feedback);
+            if (response == null)
             {
-                return Ok();
+                return BadRequest();
             }
-            return BadRequest();
+            return Ok(response);
         }
 
-        [HttpPut]
-        public IActionResult UpdateFeedback([FromBody] Feedback feedback)
+        [HttpPut("{id}")]
+        public IActionResult UpdateFeedback(int id,[FromBody] FeedBackRequest feedback)
         {
-            if (_service.UpdateFeedback(feedback))
+            var response = _service.UpdateFeedback(id, feedback);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }

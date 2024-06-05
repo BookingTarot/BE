@@ -30,10 +30,9 @@ namespace DataAccessLayers
         {
             try
             {
-               
-                    context.Feedbacks.Add(feedback);
-                    context.SaveChanges();
-                    return true;
+               context.Feedbacks.Add(feedback);
+               context.SaveChanges();
+               return true;
                 
             }
             catch (Exception e)
