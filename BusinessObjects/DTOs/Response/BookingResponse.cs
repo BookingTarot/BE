@@ -9,6 +9,10 @@ namespace BusinessObjects.DTOs.Response
     public class BookingResponse
     {
         public int BookingId { get; set; }
+        public int CustomerId { get; set; }
+        public int TarotReaderId { get; set; }
+        public int ScheduleId { get; set; }
+        public int SessionTypeId { get; set; }
         public string CustomerName { get; set; }
         public int Age { get; set; }
         public bool? Gender { get; set; }

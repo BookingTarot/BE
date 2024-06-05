@@ -3,6 +3,7 @@ using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Net;
 
 namespace Presentation.Controllers
 {
@@ -23,7 +24,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddBooking([FromBody] BookingRequest booking)
+        public IActionResult AddBooking([FromBody] BookingWithScheduleRequest booking)
         {
             if (_service.AddBooking(booking))
             {
@@ -48,11 +49,12 @@ namespace Presentation.Controllers
             return Ok(_service.GetBooking(id));
         }
         [HttpPut]
-        public IActionResult UpdateBooking([FromBody] Booking booking)
+        public IActionResult UpdateBooking(int id,[FromBody] BookingRequest booking)
         {
-            if (_service.UpdateBooking(booking))
+            var response = _service.UpdateBooking(id,booking);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }

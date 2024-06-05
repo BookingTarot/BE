@@ -12,7 +12,7 @@ namespace Services
     public interface ITarotReaderService
     {
         public List<TarotReaderResponse> getAll();
-        public TarotReader getTarotReaderById(int id);
+        public TarotReaderResponse getTarotReaderById(int id);
         public bool Add(TarotReader tarotReader);
         public bool Delete(int id);
         public bool Update(TarotReader tarotReader);
@@ -60,9 +60,24 @@ namespace Services
             return tarotReaderResponses;
         }
 
-        public TarotReader getTarotReaderById(int id)
+        public TarotReaderResponse getTarotReaderById(int id)
         {
-            return _repo.getTarotReaderById(id);
+            var tarotReader = _repo.getTarotReaderById(id);
+            TarotReaderResponse tarotReaderResponse = new TarotReaderResponse
+            {
+                TarotReaderId = tarotReader.TarotReaderId,
+                FullName = tarotReader.User.FirstName + " " + tarotReader.User.LastName,
+                Introduction = tarotReader.Introduction,
+                Description = tarotReader.Description,
+                Experience = tarotReader.Experience,
+                Kind = tarotReader.Kind,
+                Image = tarotReader.Image,
+                Status = tarotReader.Status,
+                Schedules = tarotReader.Schedules.ToList(),
+
+                SessionTypes = tarotReader.SessionTypes.ToList()
+            };
+            return tarotReaderResponse;
         }
 
         public bool Update(TarotReader tarotReader)
