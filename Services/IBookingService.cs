@@ -13,10 +13,10 @@ namespace Services
     public interface IBookingService
     {
         public List<BookingResponse> GetBookings();
-        public bool AddBooking(BookingRequest booking);
+        public bool AddBooking(BookingWithScheduleRequest booking);
         public bool DeleteBooking(int id);
-        public bool UpdateBooking(Booking booking);
-        public Booking GetBooking(int id);
+        public bool UpdateBooking(int id, BookingRequest booking);
+        public BookingResponse GetBooking(int id);
     }
     public class BookingService : IBookingService
     {
@@ -39,6 +39,10 @@ namespace Services
                 BookingResponse bookingResponse = new BookingResponse
                 {
                     BookingId = booking.BookingId,
+                    CustomerId = booking.CustomerId,
+                    TarotReaderId = booking.TarotReaderId,
+                    ScheduleId = booking.ScheduleId,
+                    SessionTypeId = booking.SessionTypeId,
                     CustomerName = booking.Customer.User.FirstName + " " + booking.Customer.User.LastName,
                     Age = DateTime.Now.Year - booking.Customer.User.DateOfBirth.Value.Year,
                     Gender = booking.Customer.User.Gender,
@@ -55,7 +59,7 @@ namespace Services
             return bookingResponses;
         }
 
-        public bool AddBooking(BookingRequest booking)
+        public bool AddBooking(BookingWithScheduleRequest booking)
         {
 
             Schedule schedule = new Schedule
@@ -92,14 +96,43 @@ namespace Services
             return _repo.DeleteBooking(id);
         }
 
-        public bool UpdateBooking(Booking booking)
+        public bool UpdateBooking(int id,BookingRequest booking)
         {
-            return _repo.UpdateBooking(booking);
+            var bookingToUpdate = _repo.GetBooking(id);
+            bookingToUpdate.CustomerId = booking.CustomerId;
+            bookingToUpdate.TarotReaderId = booking.TarotReaderId;
+            bookingToUpdate.Date = DateTime.Now;
+            bookingToUpdate.Amount = booking.Amount;
+            bookingToUpdate.Status = true;
+            bookingToUpdate.Description = booking.Description;
+            bookingToUpdate.ScheduleId = booking.ScheduleId;
+            bookingToUpdate.SessionTypeId = booking.SessionTypeId;
+
+            return _repo.UpdateBooking(bookingToUpdate);
         }
 
-        public Booking GetBooking(int id)
+        public BookingResponse GetBooking(int id)
         {
-            return _repo.GetBooking(id);
+            var booking = _repo.GetBooking(id);
+            BookingResponse bookingResponse = new BookingResponse
+            {
+                BookingId = booking.BookingId,
+                CustomerId = booking.CustomerId,
+                TarotReaderId = booking.TarotReaderId,
+                ScheduleId = booking.ScheduleId,
+                SessionTypeId = booking.SessionTypeId,
+                CustomerName = booking.Customer.User.FirstName + " " + booking.Customer.User.LastName,
+                Age = DateTime.Now.Year - booking.Customer.User.DateOfBirth.Value.Year,
+                Gender = booking.Customer.User.Gender,
+                PhoneNumber = booking.Customer.User.PhoneNumber,
+                Date = booking.Date.Value,
+                StartTime = booking.Schedule.StartTime.Value,
+                EndTime = booking.Schedule.EndTime.Value,
+                SessionTypeName = booking.SessionType.Name,
+                Status = booking.Status == true ? "Confirmed" : "Pending"
+
+            };
+            return bookingResponse;
         }
     }
 }
