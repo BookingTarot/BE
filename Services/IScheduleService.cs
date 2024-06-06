@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Services
 {
     public interface IScheduleService
     {
-        public bool AddSchedule(Schedule schedule);
-        public bool UpdateSchedule(Schedule schedule);
+        public bool AddSchedule(ScheduleRequest schedule);
+        public bool UpdateSchedule(ScheduleRequest schedule);
         public bool Delete(int id);
         public List<Schedule> GetAll();
         public Schedule GetScheduleById(int id);
@@ -25,9 +26,19 @@ namespace Services
         {
             _repo = repo;
         }
-        public bool AddSchedule(Schedule schedule)
-        {
-            return _repo.AddSchedule(schedule);
+        public bool AddSchedule(ScheduleRequest schedule)
+        { 
+            var newSchedule = new Schedule
+            {
+                TarotReaderId = schedule.TarotReaderId,
+                Date = schedule.Date,
+                StartTime = schedule.StartTime,
+                EndTime = schedule.EndTime,
+                CustomerId = schedule.CustomerId,
+                Status = schedule.Status
+            };
+
+            return _repo.AddSchedule(newSchedule);
         }
 
         public bool Delete(int id)
@@ -50,9 +61,20 @@ namespace Services
             return _repo.GetSchedulesByTarotReaderId(id);
         }
 
-        public bool UpdateSchedule(Schedule schedule)
+        public bool UpdateSchedule(ScheduleRequest  schedule)
         {
-            return _repo.UpdateSchedule(schedule);
+            var request = new Schedule
+            {
+                ScheduleId = schedule.ScheduleId,
+                TarotReaderId = schedule.TarotReaderId,
+                Date = schedule.Date,
+                StartTime = schedule.StartTime,
+                EndTime = schedule.EndTime,
+                CustomerId = schedule.CustomerId,
+                Status = schedule.Status
+            };
+            
+            return _repo.UpdateSchedule(request);
         }
     }
 }
