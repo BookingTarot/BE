@@ -28,7 +28,6 @@ namespace BusinessObjects.Models
         public virtual DbSet<TarotReader> TarotReaders { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -63,7 +62,7 @@ namespace BusinessObjects.Models
             {
                 entity.ToTable("Booking");
 
-                entity.HasIndex(e => e.SessionTypeId, "UQ__Booking__D774FFCC132F1F89")
+                entity.HasIndex(e => e.SessionTypeId, "UQ__Booking__D774FFCC07DA6587")
                     .IsUnique();
 
                 entity.Property(e => e.Date).HasColumnType("date");
@@ -86,7 +85,7 @@ namespace BusinessObjects.Models
                     .WithOne(p => p.Booking)
                     .HasForeignKey<Booking>(d => d.SessionTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Booking__Session__47DBAE45");
+                    .HasConstraintName("FK__Booking__Session__46E78A0C");
 
                 entity.HasOne(d => d.TarotReader)
                     .WithMany(p => p.Bookings)
@@ -99,7 +98,7 @@ namespace BusinessObjects.Models
             {
                 entity.ToTable("Customer");
 
-                entity.HasIndex(e => e.UserId, "UQ__Customer__1788CC4D15BC9D54")
+                entity.HasIndex(e => e.UserId, "UQ__Customer__1788CC4D426F7FFD")
                     .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(1000);
@@ -166,17 +165,11 @@ namespace BusinessObjects.Models
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Schedules)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Schedule__Custom__4222D4EF");
-
                 entity.HasOne(d => d.TarotReader)
                     .WithMany(p => p.Schedules)
                     .HasForeignKey(d => d.TarotReaderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Schedule__TarotR__4316F928");
+                    .HasConstraintName("FK__Schedule__TarotR__4222D4EF");
             });
 
             modelBuilder.Entity<SessionType>(entity =>
@@ -192,7 +185,7 @@ namespace BusinessObjects.Models
             {
                 entity.ToTable("TarotReader");
 
-                entity.HasIndex(e => e.UserId, "UQ__TarotRea__1788CC4DE8DC9C16")
+                entity.HasIndex(e => e.UserId, "UQ__TarotRea__1788CC4D1D575B51")
                     .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(4000);
@@ -203,17 +196,17 @@ namespace BusinessObjects.Models
                     .WithOne(p => p.TarotReader)
                     .HasForeignKey<TarotReader>(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TarotRead__UserI__440B1D61");
+                    .HasConstraintName("FK__TarotRead__UserI__4316F928");
 
                 entity.HasMany(d => d.SessionTypes)
                     .WithMany(p => p.TarotReaders)
                     .UsingEntity<Dictionary<string, object>>(
                         "TarotReaderSessionType",
-                        l => l.HasOne<SessionType>().WithMany().HasForeignKey("SessionTypeId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__TarotRead__Sessi__44FF419A"),
-                        r => r.HasOne<TarotReader>().WithMany().HasForeignKey("TarotReaderId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__TarotRead__Tarot__45F365D3"),
+                        l => l.HasOne<SessionType>().WithMany().HasForeignKey("SessionTypeId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__TarotRead__Sessi__440B1D61"),
+                        r => r.HasOne<TarotReader>().WithMany().HasForeignKey("TarotReaderId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__TarotRead__Tarot__44FF419A"),
                         j =>
                         {
-                            j.HasKey("TarotReaderId", "SessionTypeId").HasName("PK__TarotRea__AF7828A9B00ECADD");
+                            j.HasKey("TarotReaderId", "SessionTypeId").HasName("PK__TarotRea__AF7828A9A13C9F91");
 
                             j.ToTable("TarotReaderSessionType");
                         });
@@ -247,7 +240,7 @@ namespace BusinessObjects.Models
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__RoleId__46E78A0C");
+                    .HasConstraintName("FK__User__RoleId__45F365D3");
             });
 
             OnModelCreatingPartial(modelBuilder);

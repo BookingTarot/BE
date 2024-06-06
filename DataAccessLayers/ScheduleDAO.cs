@@ -48,7 +48,6 @@ namespace DataAccessLayers
                 scheduleToUpdate.StartTime = schedule.StartTime;
                 scheduleToUpdate.EndTime = schedule.EndTime;
                 scheduleToUpdate.TarotReaderId = schedule.TarotReaderId;
-                scheduleToUpdate.CustomerId = schedule.CustomerId;
                 context.SaveChanges();
                 return true;
             }

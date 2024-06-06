@@ -40,6 +40,18 @@ namespace DataAccessLayers
                 Description = b.Description,
                 ScheduleId = b.ScheduleId,
                 SessionTypeId = b.SessionTypeId,
+                TarotReader = new TarotReader
+                {
+                    TarotReaderId = b.TarotReader.TarotReaderId,
+                    UserId = b.TarotReader.UserId,
+                    User = new User
+                    {
+                        UserId = b.TarotReader.User.UserId,
+                        LastName = b.TarotReader.User.LastName,
+                        FirstName = b.TarotReader.User.FirstName
+                    }
+
+                },
                 Customer = new Customer
                 {
                     CustomerId = b.Customer.CustomerId,
@@ -104,6 +116,17 @@ namespace DataAccessLayers
                     Description = b.Description,
                     ScheduleId = b.ScheduleId,
                     SessionTypeId = b.SessionTypeId,
+                    TarotReader = new TarotReader
+                    {
+                        TarotReaderId = b.TarotReader.TarotReaderId,
+                        UserId = b.TarotReader.UserId,
+                        User = new User
+                        {
+                            UserId = b.TarotReader.User.UserId,
+                            LastName = b.TarotReader.User.LastName,
+                            FirstName = b.TarotReader.User.FirstName
+                        }
+                    },
                     Customer = new Customer
                     {
                         CustomerId = b.Customer.CustomerId,

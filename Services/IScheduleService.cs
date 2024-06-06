@@ -34,7 +34,6 @@ namespace Services
                 Date = schedule.Date,
                 StartTime = schedule.StartTime,
                 EndTime = schedule.EndTime,
-                CustomerId = schedule.CustomerId,
                 Status = schedule.Status
             };
 
@@ -70,7 +69,6 @@ namespace Services
                 Date = schedule.Date,
                 StartTime = schedule.StartTime,
                 EndTime = schedule.EndTime,
-                CustomerId = schedule.CustomerId,
                 Status = schedule.Status
             };
             

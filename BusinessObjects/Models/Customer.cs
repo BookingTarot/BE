@@ -9,7 +9,6 @@ namespace BusinessObjects.Models
         {
             Bookings = new HashSet<Booking>();
             Feedbacks = new HashSet<Feedback>();
-            Schedules = new HashSet<Schedule>();
         }
 
         public int CustomerId { get; set; }
@@ -20,6 +19,5 @@ namespace BusinessObjects.Models
         public virtual User User { get; set; } = null!;
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
-        public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }
