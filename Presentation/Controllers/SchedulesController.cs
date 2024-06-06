@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -30,20 +31,22 @@ namespace Presentation.Controllers
             return Ok(_service.GetScheduleById(id));
         }
         [HttpPost]
-        public IActionResult AddSchedule([FromBody] Schedule schedule)
+        public IActionResult AddSchedule([FromBody] ScheduleRequest schedule)
         {
-            if (_service.AddSchedule(schedule))
+            var response = _service.AddSchedule(schedule);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }
         [HttpPut]
-        public IActionResult UpdateSchedule([FromBody] Schedule schedule)
+        public IActionResult UpdateSchedule([FromBody] ScheduleRequest schedule)
         {
-            if (_service.UpdateSchedule(schedule))
+            var response = _service.UpdateSchedule(schedule);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }
