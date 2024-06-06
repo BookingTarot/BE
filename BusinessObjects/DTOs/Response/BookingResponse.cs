@@ -13,6 +13,7 @@ namespace BusinessObjects.DTOs.Response
         public int TarotReaderId { get; set; }
         public int ScheduleId { get; set; }
         public int SessionTypeId { get; set; }
+        public string TarotReaderName { get; set; }
         public string CustomerName { get; set; }
         public int Age { get; set; }
         public bool? Gender { get; set; }
@@ -21,6 +22,6 @@ namespace BusinessObjects.DTOs.Response
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string SessionTypeName { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
     }
 }

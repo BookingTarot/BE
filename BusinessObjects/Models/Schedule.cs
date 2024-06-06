@@ -15,10 +15,8 @@ namespace BusinessObjects.Models
         public DateTime? Date { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public int CustomerId { get; set; }
         public bool? Status { get; set; }
 
-        public virtual Customer Customer { get; set; } = null!;
         public virtual TarotReader TarotReader { get; set; } = null!;
         public virtual ICollection<Booking> Bookings { get; set; }
     }

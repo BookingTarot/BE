@@ -184,7 +184,6 @@ CREATE TABLE [dbo].[Schedule](
 	[Date] [date] NULL,
 	[StartTime] [datetime] NULL,
 	[EndTime] [datetime] NULL,
-	[CustomerId] [int] NOT NULL,
 	[Status] [bit] NULL
 PRIMARY KEY CLUSTERED 
 (
@@ -335,12 +334,12 @@ SET IDENTITY_INSERT [dbo].[Role] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Schedule] ON 
 
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (1, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T10:00:00.000' AS DateTime), CAST(N'1900-01-01T10:30:00.000' AS DateTime), 2)
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (2, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T14:00:00.000' AS DateTime), CAST(N'1900-01-01T15:00:00.000' AS DateTime), 3)
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (3, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T09:00:00.000' AS DateTime), CAST(N'1900-01-01T10:00:00.000' AS DateTime), 2)
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (4, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime), 4)
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (5, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime), 5)
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [CustomerId]) VALUES (6, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (1, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T10:00:00.000' AS DateTime), CAST(N'1900-01-01T10:30:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (2, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T14:00:00.000' AS DateTime), CAST(N'1900-01-01T15:00:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (3, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T09:00:00.000' AS DateTime), CAST(N'1900-01-01T10:00:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (4, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (5, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (6, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
 SET IDENTITY_INSERT [dbo].[Schedule] OFF
 GO
 SET IDENTITY_INSERT [dbo].[SessionType] ON 
@@ -412,9 +411,6 @@ REFERENCES [dbo].[TarotReader] ([TarotReaderId])
 GO
 ALTER TABLE [dbo].[Payment]  WITH CHECK ADD FOREIGN KEY([BookingId])
 REFERENCES [dbo].[Booking] ([BookingId])
-GO
-ALTER TABLE [dbo].[Schedule]  WITH CHECK ADD FOREIGN KEY([CustomerId])
-REFERENCES [dbo].[Customer] ([CustomerId])
 GO
 ALTER TABLE [dbo].[Schedule]  WITH CHECK ADD FOREIGN KEY([TarotReaderId])
 REFERENCES [dbo].[TarotReader] ([TarotReaderId])

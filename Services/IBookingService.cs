@@ -43,6 +43,7 @@ namespace Services
                     TarotReaderId = booking.TarotReaderId,
                     ScheduleId = booking.ScheduleId,
                     SessionTypeId = booking.SessionTypeId,
+                    TarotReaderName = booking.TarotReader.User.FirstName + " " + booking.TarotReader.User.LastName,
                     CustomerName = booking.Customer.User.FirstName + " " + booking.Customer.User.LastName,
                     Age = DateTime.Now.Year - booking.Customer.User.DateOfBirth.Value.Year,
                     Gender = booking.Customer.User.Gender,
@@ -51,7 +52,7 @@ namespace Services
                     StartTime = booking.Schedule.StartTime.Value,
                     EndTime = booking.Schedule.EndTime.Value,
                     SessionTypeName = booking.SessionType.Name,
-                    Status = booking.Status == true ? "Confirmed" : "Pending"
+                    Status = booking.Status.Value
 
                 };
                 bookingResponses.Add(bookingResponse);
@@ -69,7 +70,6 @@ namespace Services
                 Date = booking.BookDate,
                 StartTime = booking.StartTime,
                 EndTime = booking.EndTime,
-                CustomerId = booking.CustomerId,
                 Status = true
             };
             if (_scheduleRepo.AddSchedule(schedule))
@@ -129,7 +129,7 @@ namespace Services
                 StartTime = booking.Schedule.StartTime.Value,
                 EndTime = booking.Schedule.EndTime.Value,
                 SessionTypeName = booking.SessionType.Name,
-                Status = booking.Status == true ? "Confirmed" : "Pending"
+                Status = booking.Status.Value
 
             };
             return bookingResponse;

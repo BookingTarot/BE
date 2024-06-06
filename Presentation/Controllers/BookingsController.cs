@@ -23,12 +23,13 @@ namespace Presentation.Controllers
             return Ok(_service.GetBookings());
         }
 
-        [HttpPost]
+        [HttpPost("Booking with Schedule")]
         public IActionResult AddBooking([FromBody] BookingWithScheduleRequest booking)
         {
-            if (_service.AddBooking(booking))
+            var response = _service.AddBooking(booking);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }
@@ -36,9 +37,10 @@ namespace Presentation.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteBooking(int id)
         {
-            if (_service.DeleteBooking(id))
+            var response = _service.DeleteBooking(id);
+            if (response != null)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }

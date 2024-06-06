@@ -53,18 +53,7 @@ namespace DataAccessLayers
                         ScheduleId = sc.ScheduleId,
                         Date = sc.Date,
                         StartTime = sc.StartTime, EndTime = sc.EndTime,
-                        Customer = new Customer
-                        {
-                            CustomerId = sc.Customer.CustomerId,
-                            UserId = sc.Customer.UserId,
-                            User = new User
-                            {
-                                UserId = sc.Customer.User.UserId,
-                                LastName = sc.Customer.User.LastName,
-                                FirstName = sc.Customer.User.FirstName,
-                               
-                            }
-                        }
+                        
                         
 
 
@@ -108,7 +97,7 @@ namespace DataAccessLayers
                         Date = tr.Date,
                         StartTime = tr.StartTime,
                         EndTime = tr.EndTime,
-                        CustomerId = tr.CustomerId,
+                       
                     }).ToList()
                     ,
                     SessionTypes = tr.SessionTypes.Select(st => new SessionType
