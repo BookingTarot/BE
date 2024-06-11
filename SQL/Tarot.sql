@@ -1,75 +1,6 @@
-﻿ALTER DATABASE [TarotBooking] SET COMPATIBILITY_LEVEL = 150
+﻿USE [TarotBooking]
 GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [TarotBooking].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [TarotBooking] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [TarotBooking] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [TarotBooking] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [TarotBooking] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [TarotBooking] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [TarotBooking] SET AUTO_CLOSE ON 
-GO
-ALTER DATABASE [TarotBooking] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [TarotBooking] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [TarotBooking] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [TarotBooking] SET CURSOR_DEFAULT  GLOBAL 
-GO
-ALTER DATABASE [TarotBooking] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [TarotBooking] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [TarotBooking] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [TarotBooking] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [TarotBooking] SET  ENABLE_BROKER 
-GO
-ALTER DATABASE [TarotBooking] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [TarotBooking] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-ALTER DATABASE [TarotBooking] SET TRUSTWORTHY OFF 
-GO
-ALTER DATABASE [TarotBooking] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-ALTER DATABASE [TarotBooking] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [TarotBooking] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [TarotBooking] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [TarotBooking] SET RECOVERY SIMPLE 
-GO
-ALTER DATABASE [TarotBooking] SET  MULTI_USER 
-GO
-ALTER DATABASE [TarotBooking] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [TarotBooking] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [TarotBooking] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [TarotBooking] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [TarotBooking] SET DELAYED_DURABILITY = DISABLED 
-GO
-ALTER DATABASE [TarotBooking] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-ALTER DATABASE [TarotBooking] SET QUERY_STORE = OFF
-GO
-USE [TarotBooking]
-GO
-/****** Object:  Table [dbo].[Bills]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Bills]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -85,7 +16,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Booking]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Booking]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -95,26 +26,25 @@ CREATE TABLE [dbo].[Booking](
 	[CustomerId] [int] NOT NULL,
 	[TarotReaderId] [int] NOT NULL,
 	[Date] [date] NULL,
-	[Amount] [float] null,
+	[Amount] [float] NULL,
 	[Status] [bit] NULL,
 	[Description] [nvarchar](1000) NULL,
 	[ScheduleId] [int] NOT NULL,
-	[SessionTypeId] [int] not null unique,
-	
+	[SessionTypeId] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[BookingId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Customer]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Customer](
 	[CustomerId] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL Unique,
+	[UserId] [int] NOT NULL,
 	[Description] [nvarchar](1000) NULL,
 	[Status] [bit] NULL,
 PRIMARY KEY CLUSTERED 
@@ -123,7 +53,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Feedback]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Feedback]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +71,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Payment]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +89,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -173,7 +103,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Schedule]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[Schedule]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -184,14 +114,14 @@ CREATE TABLE [dbo].[Schedule](
 	[Date] [date] NULL,
 	[StartTime] [datetime] NULL,
 	[EndTime] [datetime] NULL,
-	[Status] [bit] NULL
+	[Status] [bit] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ScheduleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SessionType]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[SessionType]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,18 +139,18 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TarotReader]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[TarotReader]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TarotReader](
 	[TarotReaderId] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL Unique,
+	[UserId] [int] NOT NULL,
 	[Introduction] [nvarchar](500) NULL,
 	[Description] [nvarchar](4000) NULL,
 	[Experience] [nvarchar](max) NULL,
-    [Kind] [nvarchar](max) NULL,
+	[Kind] [nvarchar](max) NULL,
 	[Image] [varbinary](max) NULL,
 	[Status] [bit] NULL,
 PRIMARY KEY CLUSTERED 
@@ -229,7 +159,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TarotReaderSessionType]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[TarotReaderSessionType]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +174,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 5/19/2024 8:33:40 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 6/11/2024 9:29:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -283,9 +213,10 @@ SET IDENTITY_INSERT [dbo].[Bills] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Booking] ON 
 
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (1, 1, 1, CAST(N'2024-05-20' AS Date),250, 1, N'General Reading', 1, 1)
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (2, 2, 1, CAST(N'2024-05-20' AS Date),400, 1, N'Love Reading', 2, 2)
-INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date],[Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (3, 3, 2, CAST(N'2024-05-20' AS Date),500, 1, N'Career Reading', 3, 3)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date], [Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (1, 1, 1, CAST(N'2024-05-20' AS Date), 250, 1, N'General Reading', 1, 1)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date], [Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (2, 2, 1, CAST(N'2024-05-20' AS Date), 400, 1, N'Love Reading', 2, 2)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date], [Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (3, 3, 2, CAST(N'2024-05-20' AS Date), 500, 1, N'Career Reading', 3, 3)
+INSERT [dbo].[Booking] ([BookingId], [CustomerId], [TarotReaderId], [Date], [Amount], [Status], [Description], [ScheduleId], [SessionTypeId]) VALUES (4, 1, 1, CAST(N'2024-06-07' AS Date), 251, 1, N'string', 1, 1)
 SET IDENTITY_INSERT [dbo].[Booking] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Customer] ON 
@@ -334,12 +265,13 @@ SET IDENTITY_INSERT [dbo].[Role] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Schedule] ON 
 
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (1, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T10:00:00.000' AS DateTime), CAST(N'1900-01-01T10:30:00.000' AS DateTime))
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (2, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T14:00:00.000' AS DateTime), CAST(N'1900-01-01T15:00:00.000' AS DateTime))
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (3, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T09:00:00.000' AS DateTime), CAST(N'1900-01-01T10:00:00.000' AS DateTime))
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (4, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (5, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
-INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime]) VALUES (6, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime))
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (1, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T10:00:00.000' AS DateTime), CAST(N'1900-01-01T10:30:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (2, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T14:00:00.000' AS DateTime), CAST(N'1900-01-01T15:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (3, 1, CAST(N'2024-05-25' AS Date), CAST(N'1900-01-01T09:00:00.000' AS DateTime), CAST(N'1900-01-01T10:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (4, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (5, 2, CAST(N'2024-06-04' AS Date), CAST(N'2024-01-01T11:30:00.000' AS DateTime), CAST(N'2024-01-01T12:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (6, 2, CAST(N'2024-06-04' AS Date), CAST(N'1900-01-01T11:30:00.000' AS DateTime), CAST(N'1900-01-01T12:00:00.000' AS DateTime), 1)
+INSERT [dbo].[Schedule] ([ScheduleId], [TarotReaderId], [Date], [StartTime], [EndTime], [Status]) VALUES (7, 1, CAST(N'2024-06-08' AS Date), CAST(N'2024-06-08T07:55:59.837' AS DateTime), CAST(N'2024-06-08T07:55:59.837' AS DateTime), 1)
 SET IDENTITY_INSERT [dbo].[Schedule] OFF
 GO
 SET IDENTITY_INSERT [dbo].[SessionType] ON 
@@ -355,21 +287,13 @@ INSERT [dbo].[SessionType] ([SessionTypeId], [Name], [Duration], [Description], 
 INSERT [dbo].[SessionType] ([SessionTypeId], [Name], [Duration], [Description], [Price], [Status]) VALUES (9, N'Buổi học Tarot', 60, N'Phiên cố vấn được cá nhân hóa, được điều chỉnh để đáp ứng mức độ kinh nghiệm và mục tiêu của bạn, được tổ chức trên Tellory bằng video trực tiếp.', 550, 1)
 SET IDENTITY_INSERT [dbo].[SessionType] OFF
 GO
-SET IDENTITY_INSERT [dbo].[TarotReader] ON;
+SET IDENTITY_INSERT [dbo].[TarotReader] ON 
 
-INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Image], [Status], [Experience], [Kind]) 
-VALUES 
-(1, 7, N'Xin chào! Tôi là Ánh Nguyệt, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', 
-N'Mỗi readers của X-Tarot đều có một dấu ấn riêng, và ở reader Zoro phong cách nhẹ nhàng, cởi mở, dí dỏm đã trở thành một nét đặc trưng không lẫn vào đâu được. Mỗi khi tiếp xúc với anh, bạn sẽ luôn cảm thấy vô cùng thoải mái, dễ chịu, cảm giác như đã quen biết tự bao giờ. Và rồi nếu bạn có lỡ bay lên mây một chút, rồi choáng ngợp đôi chút bởi ấn tượng ban đầu về sự hoạt bát, phóng khoáng với đôi phần lãng tử của anh, thì có lẽ bạn cũng sẽ lại phải bất ngờ một chút, giật mình đôi chút mà hạ xuống dưới đất bởi cảm giác chân thật mà anh đưa lại lúc về sau.
+INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Experience], [Kind], [Image], [Status]) VALUES (1, 7, N'Xin chào! Tôi là Ánh Nguyệt, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', N'Mỗi readers của X-Tarot đều có một dấu ấn riêng, và ở reader Zoro phong cách nhẹ nhàng, cởi mở, dí dỏm đã trở thành một nét đặc trưng không lẫn vào đâu được. Mỗi khi tiếp xúc với anh, bạn sẽ luôn cảm thấy vô cùng thoải mái, dễ chịu, cảm giác như đã quen biết tự bao giờ. Và rồi nếu bạn có lỡ bay lên mây một chút, rồi choáng ngợp đôi chút bởi ấn tượng ban đầu về sự hoạt bát, phóng khoáng với đôi phần lãng tử của anh, thì có lẽ bạn cũng sẽ lại phải bất ngờ một chút, giật mình đôi chút mà hạ xuống dưới đất bởi cảm giác chân thật mà anh đưa lại lúc về sau.
 Mặc dù sở hữu rất nhiều bộ bài Tarot, nhưng anh ưa thích đồng hành cùng Legacy of the Divine Tarot hơn cả – bộ bài vừa có ngôn ngữ hình ảnh rất dễ hiểu, sâu sắc lại vừa có sức mạnh thứ hai về hệ thống chiêm tinh học gắn kèm vào. Cũng phải thôi vì tác giả của Legacy là một giảng viên đồ hoạ, nét vẽ của ông vừa rất thật lại vừa rất sâu. Và đó cũng chính là con đường mà reader Zoro chọn khi tiếp cận với các querents của mình vậy. Thẳng thắn, rõ ràng, đầy đủ, không vòng vèo, đưa lối, ấy luôn là cách anh dùng để đưa thông tin tới querent, để cùng họ nhìn chi tiết hơn câu chuyện rắc rối của bản thân, hiểu rõ hơn về từng góc cạnh của vấn đề, và cuối cùng – nhận ra đâu sẽ là điểm đặt chân kế tiếp của mình.
-Còn bạn, bạn đã biết phải book event nào tiếp theo cho mình rồi chứ?', 
-0x4F, 1, N'5 years', N'Psychic'),
-
-(2, 8, N'Xin chào! Tôi là Minh Đăng, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', 
-N'Nổi tiếng với những lần đọc chính xác và sâu sắc', 0x4F, 1, N'3 years', N'Clairvoyant');
-
-SET IDENTITY_INSERT [dbo].[TarotReader] OFF;
-
+Còn bạn, bạn đã biết phải book event nào tiếp theo cho mình rồi chứ?', N'5 years', N'Psychic', 0x4F, 1)
+INSERT [dbo].[TarotReader] ([TarotReaderId], [UserId], [Introduction], [Description], [Experience], [Kind], [Image], [Status]) VALUES (2, 8, N'Xin chào! Tôi là Minh Đăng, một Tarot Reader với niềm đam mê sâu sắc với nghệ thuật Tarot. Điều đặc biệt về phong cách của tôi chính là sự kết hợp giữa sự tinh tế và sự sâu sắc trong việc đọc bài Tarot.', N'Nổi tiếng với những lần đọc chính xác và sâu sắc', N'3 years', N'Clairvoyant', 0x4F, 1)
+SET IDENTITY_INSERT [dbo].[TarotReader] OFF
 GO
 INSERT [dbo].[TarotReaderSessionType] ([TarotReaderId], [SessionTypeId]) VALUES (1, 1)
 INSERT [dbo].[TarotReaderSessionType] ([TarotReaderId], [SessionTypeId]) VALUES (1, 2)
@@ -386,7 +310,21 @@ INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNum
 INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNumber], [Gender], [Email], [Password], [Address], [IsActive], [RoleId]) VALUES (6, N'Phát', N'Trần Tấn', CAST(N'1997-04-11' AS Date), N'0647015489', 1, N'trantanphat@gmail.com', N'abc123', N'192 Xô Viết Nghệ Tĩnh Street, Bình Thạnh District, Hồ Chí Minh City', 1, 2)
 INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNumber], [Gender], [Email], [Password], [Address], [IsActive], [RoleId]) VALUES (7, N'Nguyệt', N'Võ Ánh', CAST(N'1999-05-15' AS Date), N'0254987645', 1, N'voanhnguyet@gmail.com', N'abc123', N'123 Võ Văn Ngân Street, Thủ Đức District, Thủ Đức City', 1, 3)
 INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNumber], [Gender], [Email], [Password], [Address], [IsActive], [RoleId]) VALUES (8, N'Đăng', N'Nguyễn Minh', CAST(N'2002-03-09' AS Date), N'0345015879', 1, N'nguyenminhdang@gmail.com', N'abc123', N'12/4/5 Kha Vạn Cân Street, Thủ Đức District, Thủ Đức City', 1, 3)
+INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNumber], [Gender], [Email], [Password], [Address], [IsActive], [RoleId]) VALUES (9, N'sadasd', N'asdadd', CAST(N'2024-06-04' AS Date), N'0123123123', 1, N'123@gmail.com', N'123', N'123', 1, 2)
+INSERT [dbo].[User] ([UserId], [LastName], [FirstName], [DateOfBirth], [PhoneNumber], [Gender], [Email], [Password], [Address], [IsActive], [RoleId]) VALUES (10, N'sadasd', N'asdadd', CAST(N'2024-06-04' AS Date), N'0123123123', 0, N'1231@gmail.com', N'123', N'123', 1, 2)
 SET IDENTITY_INSERT [dbo].[User] OFF
+GO
+/****** Object:  Index [UQ__Customer__1788CC4DB9E1C758]    Script Date: 6/11/2024 9:29:57 PM ******/
+ALTER TABLE [dbo].[Customer] ADD UNIQUE NONCLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [UQ__TarotRea__1788CC4D5611774B]    Script Date: 6/11/2024 9:29:57 PM ******/
+ALTER TABLE [dbo].[TarotReader] ADD UNIQUE NONCLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Bills]  WITH CHECK ADD FOREIGN KEY([PaymentId])
 REFERENCES [dbo].[Payment] ([PaymentId])
@@ -396,6 +334,9 @@ REFERENCES [dbo].[Customer] ([CustomerId])
 GO
 ALTER TABLE [dbo].[Booking]  WITH CHECK ADD FOREIGN KEY([ScheduleId])
 REFERENCES [dbo].[Schedule] ([ScheduleId])
+GO
+ALTER TABLE [dbo].[Booking]  WITH CHECK ADD FOREIGN KEY([SessionTypeId])
+REFERENCES [dbo].[SessionType] ([SessionTypeId])
 GO
 ALTER TABLE [dbo].[Booking]  WITH CHECK ADD FOREIGN KEY([TarotReaderId])
 REFERENCES [dbo].[TarotReader] ([TarotReaderId])
@@ -426,11 +367,3 @@ REFERENCES [dbo].[TarotReader] ([TarotReaderId])
 GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([RoleId])
 REFERENCES [dbo].[Role] ([RoleId])
-Go
-ALTER TABLE [dbo].[Booking]
-WITH CHECK ADD FOREIGN KEY ([SessionTypeId]) REFERENCES [dbo].[SessionType]([SessionTypeId])
-GO
-USE [master]
-GO
-ALTER DATABASE [TarotBooking] SET  READ_WRITE 
-GO

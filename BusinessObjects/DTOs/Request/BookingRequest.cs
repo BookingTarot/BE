@@ -8,7 +8,7 @@ namespace BusinessObjects.DTOs.Request
 {
     public class BookingRequest
     {
-       
+        public int BookingId { get; set; }
         public int CustomerId { get; set; }
         public int TarotReaderId { get; set; }
         public double? Amount { get; set; }
