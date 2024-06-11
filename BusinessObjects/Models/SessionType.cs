@@ -7,6 +7,7 @@ namespace BusinessObjects.Models
     {
         public SessionType()
         {
+            Bookings = new HashSet<Booking>();
             TarotReaders = new HashSet<TarotReader>();
         }
 
@@ -17,7 +18,7 @@ namespace BusinessObjects.Models
         public double? Price { get; set; }
         public bool? Status { get; set; }
 
-        public virtual Booking? Booking { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
 
         public virtual ICollection<TarotReader> TarotReaders { get; set; }
     }

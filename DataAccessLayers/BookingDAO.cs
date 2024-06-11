@@ -27,9 +27,11 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public Booking GetBookingById(int id)
+        public  Booking GetBookingById(int id)
         {
-            return context.Bookings.Select(b => new Booking
+            return context.Bookings.
+                Where(a => a.BookingId == id)
+           .Select(b => new Booking
             {
                 BookingId = b.BookingId,
                 CustomerId = b.CustomerId,
