@@ -11,6 +11,7 @@ namespace BusinessObjects.DTOs.Response
         public int BookingId { get; set; }
         public int CustomerId { get; set; }
         public int TarotReaderId { get; set; }
+        public int TarotUserId { get; set; }
         public int ScheduleId { get; set; }
         public int SessionTypeId { get; set; }
         public string TarotReaderName { get; set; }
