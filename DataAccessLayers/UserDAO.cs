@@ -80,7 +80,26 @@ namespace DataAccessLayers
 
         public User Login(string email, string password)
         {
-            return context.Users
+            return context.Users.Select(
+                x => new User
+                {
+                    UserId = x.UserId,
+                    LastName = x.LastName,
+                    FirstName = x.FirstName,
+                    DateOfBirth = x.DateOfBirth,
+                    PhoneNumber = x.PhoneNumber,
+                    Gender = x.Gender,
+                    Email = x.Email,
+                    Password = x.Password,
+                    Address = x.Address,
+                    IsActive = x.IsActive,
+                    RoleId = x.RoleId,
+                    TarotReader = x.TarotReader != null ? new TarotReader
+                    {
+                        TarotReaderId = x.TarotReader.TarotReaderId,
+                    } : null
+
+                })
                 .FirstOrDefault(x => x.Email.Equals(email)
                                 && x.Password.Equals(password)
                                 && x.IsActive == true);
