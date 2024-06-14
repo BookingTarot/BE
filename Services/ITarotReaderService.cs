@@ -44,6 +44,7 @@ namespace Services
                 TarotReaderResponse tarotReaderResponse = new TarotReaderResponse
                 {
                     TarotReaderId = tarotReader.TarotReaderId,
+                    UserId = tarotReader.UserId,
                     FullName = tarotReader.User.FirstName + " " + tarotReader.User.LastName,
                     Introduction = tarotReader.Introduction,
                     Description = tarotReader.Description,
@@ -66,6 +67,7 @@ namespace Services
             TarotReaderResponse tarotReaderResponse = new TarotReaderResponse
             {
                 TarotReaderId = tarotReader.TarotReaderId,
+                UserId = tarotReader.UserId,
                 FullName = tarotReader.User.FirstName + " " + tarotReader.User.LastName,
                 Introduction = tarotReader.Introduction,
                 Description = tarotReader.Description,

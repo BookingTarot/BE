@@ -66,8 +66,6 @@ namespace DataAccessLayers
                         DateOfBirth = b.Customer.User.DateOfBirth,
                         Gender = b.Customer.User.Gender,
                         PhoneNumber = b.Customer.User.PhoneNumber
-
-
                     }
                 },
                 SessionType = new SessionType

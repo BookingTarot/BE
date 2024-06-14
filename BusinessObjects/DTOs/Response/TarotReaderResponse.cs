@@ -10,6 +10,7 @@ namespace BusinessObjects.DTOs.Response
     public class TarotReaderResponse
     {
         public int TarotReaderId { get; set; }
+        public int UserId { get; set; }
         public string FullName { get; set; }
         public string? Introduction { get; set; }
         public string? Description { get; set; }
