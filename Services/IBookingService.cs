@@ -53,6 +53,8 @@ namespace Services
                     StartTime = booking.Schedule.StartTime.Value,
                     EndTime = booking.Schedule.EndTime.Value,
                     SessionTypeName = booking.SessionType.Name,
+                    Amount = booking.Amount.Value,
+                    Description = booking.Description,
                     Status = booking.Status.Value
 
                 };
@@ -127,6 +129,8 @@ namespace Services
                 StartTime = booking.Schedule.StartTime.Value,
                 EndTime = booking.Schedule.EndTime.Value,
                 SessionTypeName = booking.SessionType.Name,
+                Amount = booking.Amount.Value,
+                Description = booking.Description,
                 Status = booking.Status.Value
 
             };

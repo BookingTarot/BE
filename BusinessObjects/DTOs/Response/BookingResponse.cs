@@ -23,6 +23,8 @@ namespace BusinessObjects.DTOs.Response
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string SessionTypeName { get; set; }
+        public double Amount { get; set; }
+        public string Description { get; set; }
         public bool Status { get; set; }
     }
 }
