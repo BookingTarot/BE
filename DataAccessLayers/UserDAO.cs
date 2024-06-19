@@ -115,6 +115,10 @@ namespace DataAccessLayers
             {
                 throw new Exception("A user with this email already exists.");
             }
+            if(GetUsers().Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
+            {
+                throw new Exception("A user with this phone number already exists.");
+            }
             User user = new User();
             user.LastName = registerRequest.LastName;
             user.FirstName = registerRequest.FirstName;
