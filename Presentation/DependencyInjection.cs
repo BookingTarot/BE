@@ -26,7 +26,7 @@ namespace Presentation
                                .AllowCredentials();
                     });
             });
-
+           
 
 
             services.AddSwaggerGen();
