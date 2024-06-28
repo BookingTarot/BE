@@ -94,15 +94,22 @@ namespace DataAccessLayers
                     Address = x.Address,
                     IsActive = x.IsActive,
                     RoleId = x.RoleId,
+                    Customer = x.Customer != null ? new Customer
+                    {
+                        CustomerId = x.Customer.CustomerId,
+                    } : null,
                     TarotReader = x.TarotReader != null ? new TarotReader
                     {
                         TarotReaderId = x.TarotReader.TarotReaderId,
                     } : null
+                    
+                   
 
                 })
                 .FirstOrDefault(x => x.Email.Equals(email)
                                 && x.Password.Equals(password)
                                 && x.IsActive == true);
+                   
         }
 
         public bool Register(RegisterRequest registerRequest)
