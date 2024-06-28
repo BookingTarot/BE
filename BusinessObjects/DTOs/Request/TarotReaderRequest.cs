@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.DTOs.Request
 {
-    internal class TarotReaderRequest
+    public class TarotReaderRequest
     {
+        public int TarotReaderId { get; set; }
+        public int UserId { get; set; }
+        public string? Introduction { get; set; }
+        public string? Description { get; set; }
+        public string? Experience { get; set; }
+        public string? Kind { get; set; }
+        public byte[]? Image { get; set; }
+        public bool? Status { get; set; }
     }
 }
