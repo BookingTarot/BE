@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace Services
         public bool DeleteSessionType(int id);
         public List<SessionType> GetSessionTypes();
         public SessionType GetSessionType(int id);
-        public bool AddSessionType(SessionType sessionType);
-        public bool UpdateSessionType(SessionType sessionType);
+        public bool AddSessionType(SessionTypeRequest sessionType);
+        public bool UpdateSessionType(SessionTypeRequest sessionType);
     }
     public class SessionTypeService : ISessionTypeService
     {
@@ -23,9 +24,18 @@ namespace Services
         {
             this.sessionTypeRepository = sessionTypeRepository;
         }
-        public bool AddSessionType(SessionType sessionType)
+        public bool AddSessionType(SessionTypeRequest sessionType)
         {
-            return sessionTypeRepository.AddSessionType(sessionType);
+            var request = new SessionType
+            {
+                Name = sessionType.Name,
+                Description = sessionType.Description,
+                Duration = sessionType.Duration,
+                Price = sessionType.Price,
+                Status = sessionType.Status
+            };
+           
+            return sessionTypeRepository.AddSessionType(request);
         }
 
         public bool DeleteSessionType(int id)
@@ -43,9 +53,23 @@ namespace Services
            return sessionTypeRepository.GetSessionTypes();
         }
 
-        public bool UpdateSessionType(SessionType sessionType)
+        public bool UpdateSessionType(SessionTypeRequest sessionType)
         {
-           return sessionTypeRepository.UpdateSessionType(sessionType);
+            var request = sessionTypeRepository.GetSessionType(sessionType.SessionTypeId);
+            if (request == null)
+            {
+                return false;
+            }
+            var update = new SessionType
+            {
+                SessionTypeId = sessionType.SessionTypeId,
+                Name = sessionType.Name,
+                Description = sessionType.Description,
+                Duration = sessionType.Duration,
+                Price = sessionType.Price,
+                Status = sessionType.Status
+            };
+           return sessionTypeRepository.UpdateSessionType(update);
         }
     }
 }

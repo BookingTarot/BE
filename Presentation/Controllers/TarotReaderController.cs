@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -27,7 +28,7 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpPost]
-        public IActionResult AddTarot([FromBody] TarotReader tarotReader)
+        public IActionResult AddTarot([FromBody] TarotReaderRequest tarotReader)
         {
             if (_service.Add(tarotReader))
             {
@@ -36,7 +37,7 @@ namespace Presentation.Controllers
             return BadRequest();
         }
         [HttpPut]
-        public IActionResult UpdateTarot([FromBody] TarotReader tarotReader)
+        public IActionResult UpdateTarot([FromBody] TarotReaderRequest tarotReader)
         {
             if (_service.Update(tarotReader))
             {

@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -25,7 +26,7 @@ namespace Presentation.Controllers
             return Ok(_service.GetSessionType(id));
         }
         [HttpPost]
-        public IActionResult AddSessionType([FromBody] SessionType sessionType)
+        public IActionResult AddSessionType([FromBody] SessionTypeRequest sessionType)
         {
             if (_service.AddSessionType(sessionType))
             {
@@ -34,7 +35,7 @@ namespace Presentation.Controllers
             return BadRequest();
         }
         [HttpPut]
-        public IActionResult UpdateSessionType([FromBody] SessionType sessionType)
+        public IActionResult UpdateSessionType([FromBody] SessionTypeRequest sessionType)
         {
             if (_service.UpdateSessionType(sessionType))
             {

@@ -1,4 +1,5 @@
-﻿using BusinessObjects.DTOs.Response;
+﻿using BusinessObjects.DTOs.Request;
+using BusinessObjects.DTOs.Response;
 using BusinessObjects.Models;
 using Repositories;
 using System;
@@ -13,9 +14,9 @@ namespace Services
     {
         public List<TarotReaderResponse> getAll();
         public TarotReaderResponse getTarotReaderById(int id);
-        public bool Add(TarotReader tarotReader);
+        public bool Add(TarotReaderRequest tarotReader);
         public bool Delete(int id);
-        public bool Update(TarotReader tarotReader);
+        public bool Update(TarotReaderRequest tarotReader);
     }
     public class TarotReaderService : ITarotReaderService
     {
@@ -26,9 +27,19 @@ namespace Services
             _repo = repo;
         }
 
-        public bool Add(TarotReader tarotReader)
+        public bool Add(TarotReaderRequest tarotReader)
         {
-            return _repo.Add(tarotReader);
+            var request = new TarotReader
+            {
+                UserId = tarotReader.UserId,
+                Introduction = tarotReader.Introduction,
+                Description = tarotReader.Description,
+                Experience = tarotReader.Experience,
+                Kind = tarotReader.Kind,
+                Image = tarotReader.Image,
+                Status = tarotReader.Status
+            };
+            return _repo.Add(request);
         }
 
         public bool Delete(int id)
@@ -82,9 +93,16 @@ namespace Services
             return tarotReaderResponse;
         }
 
-        public bool Update(TarotReader tarotReader)
+        public bool Update(TarotReaderRequest tarotReader)
         {
-            return _repo.Update(tarotReader);
+            var request = _repo.getTarotReaderById(tarotReader.TarotReaderId);
+            request.Introduction = tarotReader.Introduction;
+            request.Description = tarotReader.Description;
+            request.Experience = tarotReader.Experience;
+            request.Kind = tarotReader.Kind;
+            request.Image = tarotReader.Image;
+            request.Status = tarotReader.Status;
+            return _repo.Update(request);
         }
     }
 }
