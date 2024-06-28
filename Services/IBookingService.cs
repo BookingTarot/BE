@@ -12,7 +12,7 @@ namespace Services
 {
     public interface IBookingService
     {
-        public List<BookingResponse> GetBookings();
+        public List<BookingResponse> GetBookings(GetListBookingRequest request);
         public bool AddBooking(BookingRequest booking);
         public bool DeleteBooking(int id);
         public bool UpdateBooking(BookingRequest booking);
@@ -30,10 +30,32 @@ namespace Services
             _tarotReaderRepo = tarotReaderRepo;
         }
 
-        public List<BookingResponse> GetBookings()
+        public  List<BookingResponse> GetBookings(GetListBookingRequest request)
         {
-            var bookings = _repo.GetBookings();
-            List<BookingResponse> bookingResponses = new List<BookingResponse>();
+            var bookings = (_repo.GetBookings()).AsQueryable();
+            if(request.BookingId > 0)
+            {
+                bookings = bookings.Where(x => x.BookingId == request.BookingId);
+            }
+            if (request.CustomerId > 0)
+            {
+                bookings = bookings.Where(x => x.CustomerId == request.CustomerId);
+            }
+            if (request.TarotReaderId > 0)
+            {
+                bookings = bookings.Where(x => x.TarotReaderId == request.TarotReaderId);
+            }
+            if (request.ScheduleId > 0)
+            {
+                bookings = bookings.Where(x => x.ScheduleId == request.ScheduleId);
+            }
+            if (request.SessionTypeId > 0)
+            {
+                bookings = bookings.Where(x => x.SessionTypeId == request.SessionTypeId);
+            }
+            
+            
+            var bookingResponses = new List<BookingResponse>();
             foreach (var booking in bookings)
             {
                 BookingResponse bookingResponse = new BookingResponse

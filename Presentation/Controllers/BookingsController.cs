@@ -18,9 +18,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetBookings()
+        public IActionResult GetBookings([FromQuery] GetListBookingRequest request)
         {
-            return Ok(_service.GetBookings());
+            return Ok(_service.GetBookings(request));
         }
 
         [HttpPost()]

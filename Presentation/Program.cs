@@ -34,8 +34,6 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 app.UseCors("AllowReactApp");
-app.UseCors("AllowAll");
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -60,7 +60,7 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpPut()]
-        public IActionResult UpdateUser(User user)
+        public IActionResult UpdateUser(UserRequest user)
         {
             var reponse = _service.Update(user);
             if (reponse == null)

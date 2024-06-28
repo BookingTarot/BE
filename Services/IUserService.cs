@@ -15,9 +15,9 @@ namespace Services
         public bool Register(RegisterRequest registerRequest);
         public List<User> GetAll();
         public User GetById(int id);
-        public bool Update(User user);
+        public bool Update(UserRequest user);
         public bool Delete(int id);
-        public bool Add(User user);
+        public bool Add(RegisterRequest request);
     }
     public class UserService : IUserService
     {
@@ -27,8 +27,19 @@ namespace Services
             _repo = repo;
         }
 
-        public bool Add(User user)
+        public bool Add(RegisterRequest request)
         {
+            var user = new User
+            {
+                LastName = request.LastName,
+                FirstName = request.FirstName,
+                DateOfBirth = request.DateOfBirth,
+                PhoneNumber = request.PhoneNumber,
+                Gender = request.Gender,
+                Email = request.Email,
+                Password = request.Password,
+                Address = request.Address
+            };
             return _repo.Add(user);
         }
 
@@ -57,8 +68,19 @@ namespace Services
             return _repo.Register(registerRequest);
         }
 
-        public bool Update(User user)
+        public bool Update(UserRequest request)
         {
+            var user = _repo.GetById(request.UserId);
+            user.LastName = request.LastName;
+            user.FirstName = request.FirstName;
+            user.DateOfBirth = request.DateOfBirth;
+            user.PhoneNumber = request.PhoneNumber;
+            user.Email = request.Email;
+            user.Password = request.Password;
+            user.Address = request.Address;
+            user.Gender = request.Gender;
+
+
             return _repo.Update(user);
         }
     }
