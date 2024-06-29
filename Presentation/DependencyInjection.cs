@@ -66,6 +66,8 @@ namespace Presentation
 			services.AddScoped<IScheduleService, ScheduleService>();
 			services.AddScoped<ISessionTypeRepository, SessionTypeRepository>();
 			services.AddScoped<ISessionTypeService, SessionTypeService>();
+			services.AddScoped<ICustomerReposity, CustomerReposity>();
+			services.AddScoped<ICustomerService, CustomerService>();
 		}
 	}
 

@@ -12,7 +12,7 @@ namespace Services
 {
     public interface ITarotReaderService
     {
-        public List<TarotReaderResponse> getAll();
+        public List<TarotReaderResponse> getAll(GetListTarotReaderRequest request);
         public TarotReaderResponse getTarotReaderById(int id);
         public bool Add(TarotReaderRequest tarotReader);
         public bool Delete(int id);
@@ -47,9 +47,19 @@ namespace Services
             return _repo.Delete(id);
         }
 
-        public List<TarotReaderResponse> getAll()
-        {   var tarotReaders = _repo.getAll();
-            List<TarotReaderResponse> tarotReaderResponses = new List<TarotReaderResponse>();
+        public List<TarotReaderResponse> getAll(GetListTarotReaderRequest request)
+        {   
+            
+            var tarotReaders = (_repo.getAll()).AsQueryable();
+            if (!string.IsNullOrEmpty(request.Kind))
+            {
+                tarotReaders = tarotReaders.Where(x => x.Kind.Contains(request.Kind));
+            }
+            if(!string.IsNullOrEmpty(request.Experience))
+            {
+                tarotReaders = tarotReaders.Where(x => x.Experience.Contains(request.Experience));
+            }
+            var tarotReaderResponses = new List<TarotReaderResponse>();
             foreach(var tarotReader in tarotReaders)
             {
                 TarotReaderResponse tarotReaderResponse = new TarotReaderResponse

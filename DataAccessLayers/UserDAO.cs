@@ -63,7 +63,7 @@ namespace DataAccessLayers
                 userToUpdate.IsActive = user.IsActive;
                 userToUpdate.RoleId = user.RoleId;
                 context.SaveChanges();
-                return true;
+                return context.SaveChanges() > 0;
             }
             catch (Exception e)
             {
@@ -112,46 +112,23 @@ namespace DataAccessLayers
                    
         }
 
-        public bool Register(RegisterRequest registerRequest)
+        public bool RegisterUser(User user)
         {
-            if (string.IsNullOrWhiteSpace(registerRequest.Email) || string.IsNullOrWhiteSpace(registerRequest.Password))
-            {
-                throw new ArgumentException("Email and password are required.");
-            }
-            if (GetUsers().Any(x => x.Email.Equals(registerRequest.Email)))
-            {
-                throw new Exception("A user with this email already exists.");
-            }
-            if(GetUsers().Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
-            {
-                throw new Exception("A user with this phone number already exists.");
-            }
-            User user = new User();
-            user.LastName = registerRequest.LastName;
-            user.FirstName = registerRequest.FirstName;
-            user.DateOfBirth = registerRequest.DateOfBirth;
-            user.PhoneNumber = registerRequest.PhoneNumber;
-            user.Gender = registerRequest.Gender;
-            user.Email = registerRequest.Email;
-            user.Password = registerRequest.Password;
-            user.Address = registerRequest.Address;
-            user.IsActive = true;
-            user.RoleId = 2;
-            context.Users.Add(user);
             
+            context.Users.Add(user);
             return context.SaveChanges() > 0;
         }
-        public bool CreateUser(User user)
+        public User CreateUser(User user)
         {
             try
             {
                 context.Users.Add(user);
                 context.SaveChanges();
-                return true;
+                return user;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }   
     }

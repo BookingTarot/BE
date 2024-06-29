@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.DTOs.Request
 {
-    public class RegisterRequest
+    public class RegisterTarotReaderRequest
     {
-
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -18,9 +17,12 @@ namespace BusinessObjects.DTOs.Request
         public string Password { get; set; }
         public string Address { get; set; }
         public bool IsActive { get; set; }
-        public string Description { get; set; }
-        public bool Status { get; set; }
 
-
+        public string? Introduction { get; set; }
+        public string? Description { get; set; }
+        public string? Experience { get; set; }
+        public string? Kind { get; set; }
+        public byte[]? Image { get; set; }
+        public bool? Status { get; set; }
     }
 }
