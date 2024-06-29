@@ -72,7 +72,7 @@ namespace DataAccessLayers
                     feedbackToUpdate.Comments = feedback.Comments;
                     feedbackToUpdate.Date = feedback.Date;
                     context.SaveChanges();
-                    return true;
+                    return context.SaveChanges() > 0;
                 }
                 return false;
             }

@@ -12,16 +12,16 @@ namespace Repositories
     public interface IUserRepository
     {
         public User Login(string email, string password);
-        public bool Register(RegisterRequest registerRequest);
+        public bool RegisterUser(User user);
         public List<User> GetAll();
         public User GetById(int id);
         public bool Update(User user);
         public bool Delete(int id);
-        public bool Add(User user);
+        public User Add(User user);
     }
     public class UserRepository : IUserRepository
     {
-        public bool Add(User user)
+        public User Add(User user)
         {
             return UserDAO.Instance.CreateUser(user);
         }
@@ -46,9 +46,9 @@ namespace Repositories
             return UserDAO.Instance.Login(email, password);
         }
 
-        public bool Register(RegisterRequest registerRequest)
+        public bool RegisterUser(User user)
         {
-           return UserDAO.Instance.Register(registerRequest);
+           return UserDAO.Instance.RegisterUser(user);
         }
 
         public bool Update(User user)

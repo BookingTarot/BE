@@ -18,9 +18,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet()]
-        public  IActionResult GetListTarot()
+        public  IActionResult GetListTarot([FromQuery]GetListTarotReaderRequest request)
         {
-            var reponse =  _service.getAll();
+            var reponse =  _service.getAll(request);
             if(reponse == null)
             {
                 return NotFound();

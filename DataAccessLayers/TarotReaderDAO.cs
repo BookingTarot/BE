@@ -83,6 +83,8 @@ namespace DataAccessLayers
                     UserId = tr.UserId,
                     Introduction = tr.Introduction,
                     Description = tr.Description,
+                    Kind = tr.Kind,
+                    Experience = tr.Experience,
                     Image = tr.Image,
                     Status = tr.Status,
                     User = new User
@@ -146,9 +148,16 @@ namespace DataAccessLayers
         {
             try
             {
-                context.Entry(tarotReader).State = EntityState.Modified;
-                context.SaveChanges();
-                return true;
+                var tarot = new TarotReader();
+                tarot = context.TarotReaders.Find(tarotReader.TarotReaderId);
+                 tarot.Introduction = tarotReader.Introduction;
+                tarot.Description = tarotReader.Description;
+                tarot.Experience = tarotReader.Experience;
+                tarot.Kind = tarotReader.Kind;
+                tarot.Image = tarotReader.Image;
+                tarot.Status = tarotReader.Status;
+                context.TarotReaders.Update(tarot);
+                return context.SaveChanges() > 0;
             }
             catch (Exception e)
             {

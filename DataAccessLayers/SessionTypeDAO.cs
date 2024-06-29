@@ -57,8 +57,7 @@ namespace DataAccessLayers
                 sessionTypeToUpdate.Description = sessionType.Description;
                 sessionTypeToUpdate.Price = sessionType.Price;
                 sessionTypeToUpdate.Status = sessionType.Status;
-                context.SaveChanges();
-                return true;
+                return context.SaveChanges() > 0;
             }
             catch (Exception e)
             {

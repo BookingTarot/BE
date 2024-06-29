@@ -206,8 +206,8 @@ namespace DataAccessLayers
                     bookingToUpdate.Description = booking.Description;
                     bookingToUpdate.ScheduleId = booking.ScheduleId;
                     bookingToUpdate.SessionTypeId = booking.SessionTypeId;
-                    context.SaveChanges();
-                    return true;
+                    
+                    return context.SaveChanges() > 0;
                 }
                 return false;
             }

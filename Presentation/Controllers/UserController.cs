@@ -38,10 +38,20 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
 
-        [HttpPost("register")]
-        public IActionResult Register(RegisterRequest registerRequest)
+        [HttpPost("register-customer")]
+        public IActionResult RegisterCustomer(RegisterRequest registerRequest)
         {
-            var reponse = _service.Register(registerRequest);
+            var reponse = _service.RegisterCustomer(registerRequest);
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
+        [HttpPost("register-tarotreader")]
+        public IActionResult RegisterTarotReader(RegisterTarotReaderRequest registerRequest)
+        {
+            var reponse = _service.RegisterTarotReader(registerRequest);
             if (reponse == null)
             {
                 return NotFound();
