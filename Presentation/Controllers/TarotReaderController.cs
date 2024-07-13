@@ -30,27 +30,40 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult AddTarot([FromBody] TarotReaderRequest tarotReader)
         {
-            if (_service.Add(tarotReader))
+            var response = _service.Add(tarotReader);
+            if (response == true)
             {
-                return Ok();
+                return Ok(response);
+            }
+            return BadRequest();
+        }
+        [HttpPost("addSessionType")]
+        public IActionResult AddSessionTypeToTarotReader([FromBody] SessionTypeToTarotReaderRequest sessionTypeToTarotReader)
+        {
+            
+            if (_service.AddSessionTypeToTarotReader(sessionTypeToTarotReader))
+            {
+                return Ok("Successfull!");
             }
             return BadRequest();
         }
         [HttpPut]
         public IActionResult UpdateTarot([FromBody] TarotReaderRequest tarotReader)
         {
-            if (_service.Update(tarotReader))
+            var response = _service.Update(tarotReader);
+            if (response == true)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteTarot(int id)
         {
-            if (_service.Delete(id))
+            var response = _service.Delete(id);
+            if (response == true)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }

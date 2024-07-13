@@ -97,7 +97,7 @@ namespace Services
                     TarotReaderId = booking.TarotReaderId,
                     Date = DateTime.Now,
                     Amount = booking.Amount,
-                    Status = true,
+                    Status = false,
                     Description = booking.Description,
                     ScheduleId = booking.ScheduleId,
                     SessionTypeId = booking.SessionTypeId
@@ -123,7 +123,7 @@ namespace Services
             bookingToUpdate.TarotReaderId = booking.TarotReaderId;
             bookingToUpdate.Date = DateTime.Now;
             bookingToUpdate.Amount = booking.Amount;
-            bookingToUpdate.Status = true;
+            bookingToUpdate.Status = booking.Status;
             bookingToUpdate.Description = booking.Description;
             bookingToUpdate.ScheduleId = booking.ScheduleId;
             bookingToUpdate.SessionTypeId = booking.SessionTypeId;

@@ -48,7 +48,8 @@ namespace DataAccessLayers
                 scheduleToUpdate.StartTime = schedule.StartTime;
                 scheduleToUpdate.EndTime = schedule.EndTime;
                 scheduleToUpdate.TarotReaderId = schedule.TarotReaderId;
-                context.SaveChanges();
+                scheduleToUpdate.Status = schedule.Status;
+                context.Schedules.Update(scheduleToUpdate);
                 return context.SaveChanges() > 0;
             }
             catch (Exception)

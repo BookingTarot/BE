@@ -15,5 +15,6 @@ namespace BusinessObjects.DTOs.Request
         public string? Description { get; set; }
         public int ScheduleId { get; set; }
         public int SessionTypeId { get; set; }
+        public bool Status { get; set; }
     }
 }

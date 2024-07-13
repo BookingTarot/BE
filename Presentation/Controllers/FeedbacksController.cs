@@ -58,9 +58,10 @@ namespace Presentation.Controllers
         [HttpDelete]
         public IActionResult DeleteFeedback(int id)
         {
-            if (_service.DeleteFeedback(id))
+            var response = _service.DeleteFeedback(id);
+            if (response == true)
             {
-                return Ok();
+                return Ok(response);
             }
             return BadRequest();
         }

@@ -20,6 +20,7 @@ namespace Presentation.Controllers
             _bookingService = bookingService;
 
         }
+        
         [HttpPost("/create-payment-link")]
         public async Task<IActionResult> Checkout([FromBody] CreatePaymentLinkRequest request)
         {
@@ -29,7 +30,7 @@ namespace Presentation.Controllers
                 //int orderCode = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
                 ItemData item = new ItemData(booking.Description, 1, Convert.ToInt32(booking.Amount * 1000));
                 List<ItemData> items = new List<ItemData> { item };
-                PaymentData paymentData = new PaymentData(booking.BookingId, Convert.ToInt32(booking.Amount * 1000), "Thanh toan ma Booking " + booking.BookingId, items, request.cancelUrl, request.returnUrl);
+                PaymentData paymentData = new PaymentData(booking.BookingId, Convert.ToInt32(booking.Amount * 1000), booking.CustomerName +" Thanh Toán"  , items, request.cancelUrl, request.returnUrl);
 
                 CreatePaymentResult createPayment = await _payOS.createPaymentLink(paymentData);
 
