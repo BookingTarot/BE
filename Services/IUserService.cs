@@ -128,7 +128,7 @@ namespace Services
             user.Password = registerRequest.Password;
             user.Address = registerRequest.Address;
             user.IsActive = true;
-            user.RoleId = 2;
+            user.RoleId = 3;
             var newUser = _repo.Add(user);
 
             TarotReader tarotReader = new TarotReader();

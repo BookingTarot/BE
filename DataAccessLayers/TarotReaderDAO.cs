@@ -73,6 +73,10 @@ namespace DataAccessLayers
                 })
                 .ToList();
         }
+        public TarotReader GetTarot(int id)
+        {
+            return context.TarotReaders.Include(tr => tr.SessionTypes).Where(tr => tr.TarotReaderId == id).FirstOrDefault();
+        }
         public TarotReader GetTarotReaderById(int id)
         {
             return context.TarotReaders
@@ -143,26 +147,28 @@ namespace DataAccessLayers
                 return false;
             }
         }
-
+        public bool SaveChanges()
+        {
+            return context.SaveChanges() > 0;
+        }
         public bool Update(TarotReader tarotReader)
         {
-            try
-            {
-                var tarot = new TarotReader();
-                tarot = context.TarotReaders.Find(tarotReader.TarotReaderId);
-                 tarot.Introduction = tarotReader.Introduction;
+            
+                
+                var tarot = context.TarotReaders.Find(tarotReader.TarotReaderId);
+                if (tarot == null)
+                {
+                    return false;
+                }
+                tarot.Introduction = tarotReader.Introduction;
                 tarot.Description = tarotReader.Description;
                 tarot.Experience = tarotReader.Experience;
                 tarot.Kind = tarotReader.Kind;
                 tarot.Image = tarotReader.Image;
                 tarot.Status = tarotReader.Status;
-                context.TarotReaders.Update(tarot);
+                //context.TarotReaders.Update(tarot);
                 return context.SaveChanges() > 0;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+            
         }
     }
 }

@@ -12,9 +12,12 @@ namespace Repositories
     {
         public List<TarotReader> getAll();
         public TarotReader getTarotReaderById(int id);
+        public TarotReader GetTarot(int id);
         public bool Add(TarotReader tarotReader);
         public bool Delete(int id);
         public bool Update(TarotReader tarotReader);
+        public bool Save();
+        
     }
 
     public class TarotReaderRepository : ITarotReaderRepository
@@ -34,9 +37,19 @@ namespace Repositories
             return TarotReaderDAO.Instance.getAll();
         }
 
+        public TarotReader GetTarot(int id)
+        {
+            return TarotReaderDAO.Instance.GetTarot(id);
+        }
+
         public TarotReader getTarotReaderById(int id)
         {
             return TarotReaderDAO.Instance.GetTarotReaderById(id);
+        }
+
+        public bool Save()
+        {
+            return TarotReaderDAO.Instance.SaveChanges();
         }
 
         public bool Update(TarotReader tarotReader)

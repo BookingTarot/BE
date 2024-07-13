@@ -20,9 +20,11 @@ namespace Services
     public class SessionTypeService : ISessionTypeService
     {
         private readonly ISessionTypeRepository sessionTypeRepository;
-        public SessionTypeService(ISessionTypeRepository sessionTypeRepository)
+        private readonly ITarotReaderRepository tarotReaderRepository;
+        public SessionTypeService(ISessionTypeRepository sessionTypeRepository, ITarotReaderRepository tarotReaderRepository)
         {
             this.sessionTypeRepository = sessionTypeRepository;
+            this.tarotReaderRepository = tarotReaderRepository;
         }
         public bool AddSessionType(SessionTypeRequest sessionType)
         {

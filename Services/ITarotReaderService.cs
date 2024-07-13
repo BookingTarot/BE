@@ -17,14 +17,20 @@ namespace Services
         public bool Add(TarotReaderRequest tarotReader);
         public bool Delete(int id);
         public bool Update(TarotReaderRequest tarotReader);
+        public bool AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader);
     }
     public class TarotReaderService : ITarotReaderService
     {
         private readonly ITarotReaderRepository _repo;
+        private readonly ISessionTypeRepository _sessionTypeRepository;
+        
+    
 
-        public TarotReaderService(ITarotReaderRepository repo)
+        public TarotReaderService(ITarotReaderRepository repo, ISessionTypeRepository sessionTypeRepository)
         {
             _repo = repo;
+            _sessionTypeRepository = sessionTypeRepository;
+            
         }
 
         public bool Add(TarotReaderRequest tarotReader)
@@ -40,6 +46,25 @@ namespace Services
                 Status = tarotReader.Status
             };
             return _repo.Add(request);
+        }
+
+        public bool AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader)
+        {
+            var tarotReader = _repo.GetTarot(sessionTypeToTarotReader.TarotReaderId);
+            if (tarotReader != null)
+            {
+
+
+                var sessionType = _sessionTypeRepository.GetSessionType(sessionTypeToTarotReader.SessionTypeId);
+                if (sessionType != null)
+                {
+                    tarotReader.SessionTypes.Add(sessionType);
+                    return _repo.Save();
+                }
+                
+            }
+            return false;
+
         }
 
         public bool Delete(int id)
