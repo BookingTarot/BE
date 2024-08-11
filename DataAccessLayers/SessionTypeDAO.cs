@@ -26,7 +26,7 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public bool AddSessionType(SessionType sessionType)
+        public async Task<bool> AddSessionType(SessionType sessionType)
         {
             try
             {
@@ -39,16 +39,16 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public List<SessionType> GetSessionTypes()
+        public async Task<List<SessionType>> GetSessionTypes()
         {
             return context.SessionTypes.ToList();
         }
-        public SessionType GetSessionTypeById(int id)
+        public async Task<SessionType> GetSessionTypeById(int id)
         {
             return context.SessionTypes.Find(id);
         }
 
-        public bool UpdateSessionType(SessionType sessionType)
+        public async Task<bool> UpdateSessionType(SessionType sessionType)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace DataAccessLayers
             }
         }
 
-        public bool DeleteSessionType(int id)
+        public async Task<bool> DeleteSessionType(int id)
         {
             try
             {

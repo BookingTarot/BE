@@ -11,12 +11,12 @@ namespace Services
 {
     public interface IScheduleService
     {
-        public bool AddSchedule(ScheduleRequest schedule);
-        public bool UpdateSchedule(ScheduleRequest schedule);
-        public bool Delete(int id);
-        public List<Schedule> GetAll();
-        public Schedule GetScheduleById(int id);
-        public List<Schedule> GetSchedulesByTarotReaderId(int id);
+        public Task<bool> AddSchedule(ScheduleRequest schedule);
+        public Task<bool> UpdateSchedule(ScheduleRequest schedule);
+        public Task<bool> Delete(int id);
+        public Task<List<Schedule>> GetAll();
+        public Task<Schedule> GetScheduleById(int id);
+        public Task<List<Schedule>> GetSchedulesByTarotReaderId(int id);
     }
 
     public class ScheduleService : IScheduleService
@@ -26,7 +26,7 @@ namespace Services
         {
             _repo = repo;
         }
-        public bool AddSchedule(ScheduleRequest schedule)
+        public async Task<bool> AddSchedule(ScheduleRequest schedule)
         { 
             var newSchedule = new Schedule
             {
@@ -37,30 +37,30 @@ namespace Services
                 Status = schedule.Status
             };
 
-            return _repo.AddSchedule(newSchedule);
+            return await _repo.AddSchedule(newSchedule);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repo.Delete(id);
+            return await _repo.Delete(id);
         }
 
-        public List<Schedule> GetAll()
+        public async Task<List<Schedule>> GetAll()
         {
-           return _repo.GetAll();
+           return await _repo.GetAll();
         }
 
-        public Schedule GetScheduleById(int id)
+        public async Task<Schedule> GetScheduleById(int id)
         {
-           return _repo.GetScheduleById(id);
+           return await _repo.GetScheduleById(id);
         }
 
-        public List<Schedule> GetSchedulesByTarotReaderId(int id)
+        public async Task<List<Schedule>> GetSchedulesByTarotReaderId(int id)
         {
-            return _repo.GetSchedulesByTarotReaderId(id);
+            return await _repo.GetSchedulesByTarotReaderId(id);
         }
 
-        public bool UpdateSchedule(ScheduleRequest  schedule)
+        public async Task<bool> UpdateSchedule(ScheduleRequest  schedule)
         {
             var request = new Schedule
             {
@@ -72,7 +72,7 @@ namespace Services
                 Status = schedule.Status
             };
             
-            return _repo.UpdateSchedule(request);
+            return await _repo.UpdateSchedule(request);
         }
     }
 }

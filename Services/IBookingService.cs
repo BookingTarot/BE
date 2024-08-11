@@ -12,11 +12,11 @@ namespace Services
 {
     public interface IBookingService
     {
-        public List<BookingResponse> GetBookings(GetListBookingRequest request);
-        public bool AddBooking(BookingRequest booking);
-        public bool DeleteBooking(int id);
-        public bool UpdateBooking(BookingRequest booking);
-        public BookingResponse GetBooking(int id);
+        public Task<List<BookingResponse>> GetBookings(GetListBookingRequest request);
+        public Task<bool> AddBooking(BookingRequest booking);
+        public Task<bool> DeleteBooking(int id);
+        public Task<bool> UpdateBooking(BookingRequest booking);
+        public Task<BookingResponse> GetBooking(int id);
     }
     public class BookingService : IBookingService
     {
@@ -30,9 +30,9 @@ namespace Services
             _tarotReaderRepo = tarotReaderRepo;
         }
 
-        public  List<BookingResponse> GetBookings(GetListBookingRequest request)
+        public async Task<List<BookingResponse>> GetBookings(GetListBookingRequest request)
         {
-            var bookings = (_repo.GetBookings()).AsQueryable();
+            var bookings =  (await _repo.GetBookings()).AsQueryable();
             if(request.BookingId > 0)
             {
                 bookings = bookings.Where(x => x.BookingId == request.BookingId);
@@ -77,7 +77,8 @@ namespace Services
                     SessionTypeName = booking.SessionType.Name,
                     Amount = booking.Amount.Value,
                     Description = booking.Description,
-                    Status = booking.Status.Value
+                    Status = booking.Status.Value,
+                    LinkMeet = booking.LinkMeet
 
                 };
                 bookingResponses.Add(bookingResponse);
@@ -85,7 +86,7 @@ namespace Services
             return bookingResponses;
         }
 
-        public bool AddBooking(BookingRequest booking)
+        public async Task<bool> AddBooking(BookingRequest booking)
         {
 
            
@@ -101,39 +102,41 @@ namespace Services
                     Description = booking.Description,
                     ScheduleId = booking.ScheduleId,
                     SessionTypeId = booking.SessionTypeId
+                    //LinkMeet = booking.LinkMeet
                 };
-                return _repo.AddBooking(newBooking);
+                return await _repo.AddBooking(newBooking);
             
             
         }
 
-        public bool DeleteBooking(int id)
+        public async Task<bool> DeleteBooking(int id)
         {
-            return _repo.DeleteBooking(id);
+            return await _repo.DeleteBooking(id);
         }
 
-        public bool UpdateBooking(BookingRequest booking)
+        public  async Task<bool> UpdateBooking(BookingRequest booking)
         {
-            var bookingToUpdate = _repo.GetBooking(booking.BookingId);
+            var bookingToUpdate = await _repo.GetBooking(booking.BookingId);
             if (bookingToUpdate == null)
             {
                 return false;
             }
             bookingToUpdate.CustomerId = booking.CustomerId;
             bookingToUpdate.TarotReaderId = booking.TarotReaderId;
-            bookingToUpdate.Date = DateTime.Now;
+            bookingToUpdate.Date = booking.Date;
             bookingToUpdate.Amount = booking.Amount;
             bookingToUpdate.Status = booking.Status;
             bookingToUpdate.Description = booking.Description;
             bookingToUpdate.ScheduleId = booking.ScheduleId;
             bookingToUpdate.SessionTypeId = booking.SessionTypeId;
+            bookingToUpdate.LinkMeet = booking.LinkMeet;
 
-            return _repo.UpdateBooking(bookingToUpdate);
+            return await _repo.UpdateBooking(bookingToUpdate);
         }
 
-        public BookingResponse GetBooking(int id)
+        public async Task<BookingResponse> GetBooking(int id)
         {
-            var booking = _repo.GetBooking(id);
+            var booking = await _repo.GetBooking(id);
             BookingResponse bookingResponse = new BookingResponse
             {
                 BookingId = booking.BookingId,
@@ -153,7 +156,9 @@ namespace Services
                 SessionTypeName = booking.SessionType.Name,
                 Amount = booking.Amount.Value,
                 Description = booking.Description,
-                Status = booking.Status.Value
+                Status = booking.Status.Value,
+                LinkMeet = booking.LinkMeet
+                
 
             };
             return bookingResponse;

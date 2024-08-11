@@ -18,26 +18,26 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("tarotreader/{tarotReaderId}")]
-        public IActionResult GetFeedbacksByTarotReaderId(int tarotReaderId)
+        public async Task<IActionResult> GetFeedbacksByTarotReaderId(int tarotReaderId)
         {
-            return Ok(_service.GetFeedbacksByTarotReaderId(tarotReaderId));
+            return Ok(await _service.GetFeedbacksByTarotReaderId(tarotReaderId));
         }
 
         [HttpGet]
-        public IActionResult GetFeedbacks()
+        public async Task<IActionResult> GetFeedbacks()
         {
-            return Ok(_service.GetFeedbacks());
+            return Ok(await _service.GetFeedbacks());
         }
         [HttpGet("{id}")]
-        public IActionResult GetFeedbackById(int id)
+        public async Task<IActionResult> GetFeedbackById(int id)
         {
-            return Ok(_service.GetFeedbackById(id));
+            return Ok(await _service.GetFeedbackById(id));
         }
 
         [HttpPost]
-        public IActionResult AddFeedback([FromBody] FeedBackRequest feedback)
+        public async Task<IActionResult> AddFeedback([FromBody] FeedBackRequest feedback)
         {
-            var response = _service.AddFeedback(feedback);
+            var response = await _service.AddFeedback(feedback);
             if (response == null)
             {
                 return BadRequest();
@@ -46,9 +46,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateFeedback(int id,[FromBody] FeedBackRequest feedback)
+        public async Task<IActionResult> UpdateFeedback(int id,[FromBody] FeedBackRequest feedback)
         {
-            var response = _service.UpdateFeedback(id, feedback);
+            var response = await _service.UpdateFeedback(id, feedback);
             if (response != null)
             {
                 return Ok(response);
@@ -56,9 +56,9 @@ namespace Presentation.Controllers
             return BadRequest();
         }
         [HttpDelete]
-        public IActionResult DeleteFeedback(int id)
+        public async Task<IActionResult> DeleteFeedback(int id)
         {
-            var response = _service.DeleteFeedback(id);
+            var response = await _service.DeleteFeedback(id);
             if (response == true)
             {
                 return Ok(response);

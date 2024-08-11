@@ -26,5 +26,6 @@ namespace BusinessObjects.DTOs.Response
         public double Amount { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
+        public string? LinkMeet { get; set; }
     }
 }

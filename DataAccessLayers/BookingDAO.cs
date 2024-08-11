@@ -27,7 +27,7 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public  Booking GetBookingById(int id)
+        public async Task<Booking> GetBookingById(int id)
         {
             return context.Bookings.
                 Where(a => a.BookingId == id)
@@ -36,12 +36,13 @@ namespace DataAccessLayers
                 BookingId = b.BookingId,
                 CustomerId = b.CustomerId,
                 TarotReaderId = b.TarotReaderId,
-                Date = b.Date,
+                Date = b.Date.Value,
                 Amount = b.Amount,
                 Status = b.Status,
                 Description = b.Description,
                 ScheduleId = b.ScheduleId,
                 SessionTypeId = b.SessionTypeId,
+                LinkMeet = b.LinkMeet,
                 TarotReader = new TarotReader
                 {
                     TarotReaderId = b.TarotReader.TarotReaderId,
@@ -102,20 +103,21 @@ namespace DataAccessLayers
             }).FirstOrDefault();
         }
 
-        public List<Booking> GetBookings()
+        public async Task<List<Booking>> GetBookings()
         {
-            return context.Bookings
+            return context.Bookings.OrderByDescending(b => b.BookingId)
                 .Select(b => new Booking
                 {
                     BookingId = b.BookingId,
                     CustomerId = b.CustomerId,
                     TarotReaderId = b.TarotReaderId,
-                    Date = b.Date,
+                    Date = b.Date.Value,
                     Amount = b.Amount,
                     Status = b.Status,
                     Description = b.Description,
                     ScheduleId = b.ScheduleId,
                     SessionTypeId = b.SessionTypeId,
+                    LinkMeet = b.LinkMeet,
                     TarotReader = new TarotReader
                     {
                         TarotReaderId = b.TarotReader.TarotReaderId,
@@ -177,7 +179,7 @@ namespace DataAccessLayers
                 }).ToList();
         }
 
-        public bool AddBooking(Booking booking)
+        public async Task<bool> AddBooking(Booking booking)
         {
             try
             {
@@ -191,7 +193,7 @@ namespace DataAccessLayers
             }
         }
 
-        public bool UpdateBooking(Booking booking)
+        public async Task<bool> UpdateBooking(Booking booking)
         {
             try
             {
@@ -206,6 +208,7 @@ namespace DataAccessLayers
                     bookingToUpdate.Description = booking.Description;
                     bookingToUpdate.ScheduleId = booking.ScheduleId;
                     bookingToUpdate.SessionTypeId = booking.SessionTypeId;
+                    bookingToUpdate.LinkMeet = booking.LinkMeet;
                     
                     return context.SaveChanges() > 0;
                 }
@@ -217,7 +220,7 @@ namespace DataAccessLayers
             }
         }
 
-        public bool DeleteBooking(int id)
+        public async Task<bool> DeleteBooking(int id)
         {
             try
             {

@@ -10,44 +10,44 @@ namespace Repositories
 {
     public interface IFeedbackRepository
     {
-        public bool AddFeedback(Feedback feedback);
-        public List<Feedback> GetFeedbacks();
-        public Feedback GetFeedbackById(int id);
-        public bool UpdateFeedback(Feedback feedback);
-        public bool DeleteFeedback(int id);
-        public List<Feedback> GetFeedbacksByTarotReaderId(int id);
+        public Task<bool> AddFeedback(Feedback feedback);
+        public Task<List<Feedback>> GetFeedbacks();
+        public Task<Feedback> GetFeedbackById(int id);
+        public Task<bool> UpdateFeedback(Feedback feedback);
+        public Task<bool> DeleteFeedback(int id);
+        public Task<List<Feedback>> GetFeedbacksByTarotReaderId(int id);
     }
 
     public class FeedbackRepository : IFeedbackRepository
     {
-        public bool AddFeedback(Feedback feedback)
+        public async Task<bool> AddFeedback(Feedback feedback)
         {
-            return FeedbackDAO.Instance.AddFeedback(feedback);
+            return await FeedbackDAO.Instance.AddFeedback(feedback);
         }
 
-        public bool DeleteFeedback(int id)
+        public async Task<bool> DeleteFeedback(int id)
         {
-            return FeedbackDAO.Instance.DeleteFeedback(id);
+            return await FeedbackDAO.Instance.DeleteFeedback(id);
         }
 
-        public Feedback GetFeedbackById(int id)
+        public async Task<Feedback> GetFeedbackById(int id)
         {
-            return FeedbackDAO.Instance.GetFeedbackById(id);
+            return await FeedbackDAO.Instance.GetFeedbackById(id);
         }
 
-        public List<Feedback> GetFeedbacks()
+        public async Task<List<Feedback>> GetFeedbacks()
         {
-           return FeedbackDAO.Instance.GetFeedbacks();
+           return await FeedbackDAO.Instance.GetFeedbacks();
         }
 
-        public List<Feedback> GetFeedbacksByTarotReaderId(int id)
+        public async Task<List<Feedback>> GetFeedbacksByTarotReaderId(int id)
         {
-            return FeedbackDAO.Instance.GetFeedbacksByTarotReaderId(id);
+            return await FeedbackDAO.Instance.GetFeedbacksByTarotReaderId(id);
         }
 
-        public bool UpdateFeedback(Feedback feedback)
+        public async Task<bool> UpdateFeedback(Feedback feedback)
         {
-            return FeedbackDAO.Instance.UpdateFeedback(feedback);
+            return await FeedbackDAO.Instance.UpdateFeedback(feedback);
         }
     }
 }

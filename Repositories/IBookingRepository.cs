@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Models;
+﻿using BusinessObjects.DTOs.Response;
+using BusinessObjects.Models;
 using DataAccessLayers;
 using System;
 using System.Collections.Generic;
@@ -10,37 +11,37 @@ namespace Repositories
 {
     public interface IBookingRepository
     {
-        public List<Booking> GetBookings();
-        public bool AddBooking(Booking booking);
-        public bool DeleteBooking(int id);
-        public bool UpdateBooking(Booking booking);
-        public Booking GetBooking(int id);
+        public Task<List<Booking>> GetBookings();
+        public Task<bool> AddBooking(Booking booking);
+        public Task<bool> DeleteBooking(int id);
+        public Task<bool> UpdateBooking(Booking booking);
+        public Task<Booking> GetBooking(int id);
     }
     public class BookingRepository : IBookingRepository
     {
-        public bool AddBooking(Booking booking)
+        public async Task<bool> AddBooking(Booking booking)
         {
-            return BookingDAO.Instance.AddBooking(booking);
+            return await BookingDAO.Instance.AddBooking(booking);
         }
 
-        public bool DeleteBooking(int id)
+        public async Task<bool> DeleteBooking(int id)
         {
-            return BookingDAO.Instance.DeleteBooking(id);
+            return await BookingDAO.Instance.DeleteBooking(id);
         }
 
-        public Booking GetBooking(int id)
+        public async Task<Booking> GetBooking(int id)
         {
-            return BookingDAO.Instance.GetBookingById(id);
+            return await BookingDAO.Instance.GetBookingById(id);
         }
 
-        public List<Booking> GetBookings()
+        public async Task<List<Booking>> GetBookings()
         {
-            return BookingDAO.Instance.GetBookings();
+            return await BookingDAO.Instance.GetBookings();
         }
 
-        public bool UpdateBooking(Booking booking)
+        public async Task<bool> UpdateBooking(Booking booking)
         {
-            return BookingDAO.Instance.UpdateBooking(booking);
+            return await BookingDAO.Instance.UpdateBooking(booking);
         }
     }
 }

@@ -11,11 +11,11 @@ namespace Services
 {
     public interface ICustomerService
     {
-        public List<Customer> getAll();
-        public Customer getCustomerById(int id);
-        public bool Add(CustomerRequest customer);
-        public bool Delete(int id);
-        public bool Update(CustomerRequest customer);
+        public Task<List<Customer>> getAll();
+        public Task<Customer> getCustomerById(int id);
+        public Task<bool> Add(CustomerRequest customer);
+        public Task<bool> Delete(int id);
+        public Task<bool> Update(CustomerRequest customer);
     }
     public class CustomerService : ICustomerService
     {
@@ -26,31 +26,31 @@ namespace Services
             _repo = repo;
         }
 
-        public bool Add(CustomerRequest request)
+        public async Task<bool> Add(CustomerRequest request)
         {
             var customer = new Customer();
             customer.UserId = request.UserId;
             customer.Description = request.Description;
             customer.Status = request.Status;
-            return _repo.Add(customer);
+            return await _repo.Add(customer);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repo.Delete(id);
+            return await _repo.Delete(id);
         }
 
-        public List<Customer> getAll()
+        public async Task<List<Customer>> getAll()
         {
-            return _repo.getAll();
+            return await _repo.getAll();
         }
 
-        public Customer getCustomerById(int id)
+        public async Task<Customer> getCustomerById(int id)
         {
-            return _repo.getCustomerById(id);
+            return await _repo.getCustomerById(id);
         }
 
-        public bool Update(CustomerRequest customer)
+        public async Task<bool> Update(CustomerRequest customer)
         {
             var customerUpdate = new Customer();
             customerUpdate.CustomerId = customer.CustomerId;
@@ -58,7 +58,7 @@ namespace Services
             customerUpdate.Description = customer.Description;
             customerUpdate.Status = customer.Status;
             
-            return _repo.Update(customerUpdate);
+            return await _repo.Update(customerUpdate);
         }
 
        

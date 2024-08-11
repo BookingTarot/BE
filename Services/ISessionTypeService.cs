@@ -11,11 +11,11 @@ namespace Services
 {
     public interface ISessionTypeService
     {
-        public bool DeleteSessionType(int id);
-        public List<SessionType> GetSessionTypes();
-        public SessionType GetSessionType(int id);
-        public bool AddSessionType(SessionTypeRequest sessionType);
-        public bool UpdateSessionType(SessionTypeRequest sessionType);
+        public Task<bool> DeleteSessionType(int id);
+        public Task<List<SessionType>> GetSessionTypes();
+        public Task<SessionType> GetSessionType(int id);
+        public Task<bool> AddSessionType(SessionTypeRequest sessionType);
+        public Task<bool> UpdateSessionType(SessionTypeRequest sessionType);
     }
     public class SessionTypeService : ISessionTypeService
     {
@@ -26,7 +26,7 @@ namespace Services
             this.sessionTypeRepository = sessionTypeRepository;
             this.tarotReaderRepository = tarotReaderRepository;
         }
-        public bool AddSessionType(SessionTypeRequest sessionType)
+        public async Task<bool> AddSessionType(SessionTypeRequest sessionType)
         {
             var request = new SessionType
             {
@@ -37,27 +37,27 @@ namespace Services
                 Status = sessionType.Status
             };
            
-            return sessionTypeRepository.AddSessionType(request);
+            return await sessionTypeRepository.AddSessionType(request);
         }
 
-        public bool DeleteSessionType(int id)
+        public async Task<bool> DeleteSessionType(int id)
         {
-            return sessionTypeRepository.DeleteSessionType(id);
+            return await sessionTypeRepository.DeleteSessionType(id);
         }
 
-        public SessionType GetSessionType(int id)
+        public async Task<SessionType> GetSessionType(int id)
         {
-            return sessionTypeRepository.GetSessionType(id);
+            return await sessionTypeRepository.GetSessionType(id);
         }
 
-        public List<SessionType> GetSessionTypes()
+        public async Task<List<SessionType>> GetSessionTypes()
         {
-           return sessionTypeRepository.GetSessionTypes();
+           return await sessionTypeRepository.GetSessionTypes();
         }
 
-        public bool UpdateSessionType(SessionTypeRequest sessionType)
+        public async Task<bool> UpdateSessionType(SessionTypeRequest sessionType)
         {
-            var request = sessionTypeRepository.GetSessionType(sessionType.SessionTypeId);
+            var request = await sessionTypeRepository.GetSessionType(sessionType.SessionTypeId);
             if (request == null)
             {
                 return false;
@@ -71,7 +71,7 @@ namespace Services
                 Price = sessionType.Price,
                 Status = sessionType.Status
             };
-           return sessionTypeRepository.UpdateSessionType(update);
+           return await sessionTypeRepository.UpdateSessionType(update);
         }
     }
 }

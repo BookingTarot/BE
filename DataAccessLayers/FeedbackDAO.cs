@@ -26,7 +26,7 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public bool AddFeedback(Feedback feedback)
+        public async Task<bool> AddFeedback(Feedback feedback)
         {
             try
             {
@@ -40,26 +40,26 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public List<Feedback> GetFeedbacksByTarotReaderId(int id)
+        public async Task<List<Feedback>> GetFeedbacksByTarotReaderId(int id)
         {
             
                 return context.Feedbacks.Where(f => f.TarotReaderId == id).ToList();
             
         }
-        public List<Feedback> GetFeedbacks()
+        public async Task<List<Feedback>> GetFeedbacks()
         {
             
                 return context.Feedbacks.ToList();
             
         }
-        public Feedback GetFeedbackById(int id)
+        public async Task<Feedback> GetFeedbackById(int id)
         {
             
                 return context.Feedbacks.Find(id);
             
         }
 
-        public bool UpdateFeedback(Feedback feedback)
+        public async Task<bool> UpdateFeedback(Feedback feedback)
         {
             try
             {
@@ -71,7 +71,6 @@ namespace DataAccessLayers
                     feedbackToUpdate.Rating = feedback.Rating;
                     feedbackToUpdate.Comments = feedback.Comments;
                     feedbackToUpdate.Date = feedback.Date;
-                    context.SaveChanges();
                     return context.SaveChanges() > 0;
                 }
                 return false;
@@ -82,7 +81,7 @@ namespace DataAccessLayers
             }
         }
 
-        public bool DeleteFeedback(int id)
+        public async Task<bool> DeleteFeedback(int id)
         {
             try
             {

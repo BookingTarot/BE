@@ -11,14 +11,16 @@ namespace Services
 {
     public interface IUserService
     {
-       public User Login(string email, string password);
-        public bool RegisterCustomer(RegisterRequest registerRequest);
-        public List<User> GetAll();
-        public User GetById(int id);
-        public bool Update(UserRequest user);
-        public bool Delete(int id);
-        public User Add(UserRequest request);
-        public bool RegisterTarotReader(RegisterTarotReaderRequest registerRequest);
+       public Task<User> Login(string email, string password);
+        public Task<bool> RegisterCustomer(RegisterRequest registerRequest);
+        public Task<List<User>> GetAll();
+        public Task<User> GetById(int id);
+        public Task<bool> Update(UserRequest user);
+        public Task<bool> Delete(int id);
+        public Task<User> Add(UserRequest request);
+        public Task<bool> RegisterTarotReader(RegisterTarotReaderRequest registerRequest);
+
+        public Task<bool> UpdateRole(int id, int roleId);
     }
     public class UserService : IUserService
     {
@@ -32,7 +34,7 @@ namespace Services
             _tarotReaderRepository = tarotReaderRepository;
         }
 
-        public User Add(UserRequest request)
+        public async Task<User> Add(UserRequest request)
         {
             var user = new User
             {
@@ -45,40 +47,41 @@ namespace Services
                 Password = request.Password,
                 Address = request.Address
             };
-            return _repo.Add(user);
+            return await _repo.Add(user);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repo.Delete(id);
+            return await _repo.Delete(id);
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return _repo.GetAll();
+            return await _repo.GetAll();
         }
 
-        public User GetById(int id)
+        public async Task<User> GetById(int id)
         {
-            return _repo.GetById(id);
+            return await _repo.GetById(id);
         }
 
-        public User Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
-            return _repo.Login(email, password);
+            return await _repo.Login(email, password);
         }
 
-        public bool RegisterCustomer(RegisterRequest registerRequest)
+        public async Task<bool> RegisterCustomer(RegisterRequest registerRequest)
         {
             if (string.IsNullOrWhiteSpace(registerRequest.Email) || string.IsNullOrWhiteSpace(registerRequest.Password))
             {
                 throw new ArgumentException("Email and password are required.");
             }
-            if (GetAll().Any(x => x.Email.Equals(registerRequest.Email)))
+            var users = await _repo.GetAll();
+            if (users.Any(x => x.Email.Equals(registerRequest.Email)))
             {
                 throw new Exception("A user with this email already exists.");
             }
-            if (GetAll().Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
+            if (users.Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
             {
                 throw new Exception("A user with this phone number already exists.");
             }
@@ -93,28 +96,29 @@ namespace Services
             user.Address = registerRequest.Address;
             user.IsActive = true;
             user.RoleId = 2;
-            var newUser = _repo.Add(user);
+            var newUser = await _repo.Add(user);
             
 
             Customer customer = new Customer();
             customer.UserId = newUser.UserId;
             customer.Description = registerRequest.Description;
             customer.Status = true;
-            _customerReposity.Add(customer);
+            await _customerReposity.Add(customer);
             return true;
         }
 
-        public bool RegisterTarotReader(RegisterTarotReaderRequest registerRequest)
+        public async Task<bool> RegisterTarotReader(RegisterTarotReaderRequest registerRequest)
         {
             if (string.IsNullOrWhiteSpace(registerRequest.Email) || string.IsNullOrWhiteSpace(registerRequest.Password))
             {
                 throw new ArgumentException("Email and password are required.");
             }
-            if (GetAll().Any(x => x.Email.Equals(registerRequest.Email)))
+            var users = await _repo.GetAll();
+            if (users.Any(x => x.Email.Equals(registerRequest.Email)))
             {
                 throw new Exception("A user with this email already exists.");
             }
-            if (GetAll().Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
+            if (users.Any(x => x.PhoneNumber.Equals(registerRequest.PhoneNumber)))
             {
                 throw new Exception("A user with this phone number already exists.");
             }
@@ -129,7 +133,7 @@ namespace Services
             user.Address = registerRequest.Address;
             user.IsActive = true;
             user.RoleId = 3;
-            var newUser = _repo.Add(user);
+            var newUser = await _repo.Add(user);
 
             TarotReader tarotReader = new TarotReader();
             tarotReader.UserId = newUser.UserId;
@@ -139,15 +143,15 @@ namespace Services
            tarotReader.Kind = registerRequest.Kind;
             tarotReader.Image = registerRequest.Image;
             tarotReader.Status = true;
-            _tarotReaderRepository.Add(tarotReader);
+            await _tarotReaderRepository.Add(tarotReader);
             return true;
             
 
     }
 
-        public bool Update(UserRequest request)
+        public async Task<bool> Update(UserRequest request)
         {
-            var user = _repo.GetById(request.UserId);
+            var user = await _repo.GetById(request.UserId);
             user.LastName = request.LastName;
             user.FirstName = request.FirstName;
             user.DateOfBirth = request.DateOfBirth;
@@ -158,9 +162,12 @@ namespace Services
             user.Gender = request.Gender;
 
 
-            return _repo.Update(user);
+            return await _repo.Update(user);
         }
 
-      
+        public async Task<bool> UpdateRole(int id, int roleId)
+        {
+            return await _repo.UpdateRole(id, roleId);
+        }
     }
 }

@@ -29,11 +29,11 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
             return context.Users.Where(u => u.UserId == id).FirstOrDefault();
         }
-        public bool DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool UpdateUser(User user)
+        public async Task<bool> UpdateUser(User user)
         {
             try
             {
@@ -70,15 +70,29 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public List<User> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
             return context.Users.Where(x => x.IsActive == true)
                 //.Include(tr => tr.TarotReader)
                 //.Include(r => r.Role)
                 .ToList();
         }
+        public async Task<bool> UpdateRole(int id, int roleId)
+        {
+            try
+            {
+                var user = context.Users.Find(id);
+                user.RoleId = roleId;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
-        public User Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
             return context.Users.Select(
                 x => new User
@@ -112,13 +126,13 @@ namespace DataAccessLayers
                    
         }
 
-        public bool RegisterUser(User user)
+        public async Task<bool> RegisterUser(User user)
         {
             
             context.Users.Add(user);
             return context.SaveChanges() > 0;
         }
-        public User CreateUser(User user)
+        public async Task<User> CreateUser(User user)
         {
             try
             {

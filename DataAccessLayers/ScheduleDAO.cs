@@ -27,19 +27,19 @@ namespace DataAccessLayers
         {
             context = new TarotBookingContext();
         }
-        public List<Schedule> GetAll()
+        public async Task<List<Schedule>> GetAll()
         {
             return context.Schedules.ToList();
         }
-        public Schedule GetScheduleById(int id)
+        public async Task<Schedule> GetScheduleById(int id)
         {
             return context.Schedules.Find(id);
         }
-        public List<Schedule> GetSchedulesByTarotReaderId(int id)
+        public async Task<List<Schedule>> GetSchedulesByTarotReaderId(int id)
         {
             return context.Schedules.Where(s => s.TarotReaderId == id).ToList();
         }
-        public bool UpdateSchedule(Schedule schedule)
+        public async Task<bool> UpdateSchedule(Schedule schedule)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool AddSchedule(Schedule schedule)
+        public async Task<bool> AddSchedule(Schedule schedule)
         {
             try
             {

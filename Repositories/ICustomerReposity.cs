@@ -10,37 +10,37 @@ namespace Repositories
 {
     public interface ICustomerReposity
     {
-        public List<Customer> getAll();
-        public Customer getCustomerById(int id);
-        public bool Add(Customer customer);
-        public bool Delete(int id);
-        public bool Update(Customer customer);
+        public Task<List<Customer>> getAll();
+        public Task<Customer> getCustomerById(int id);
+        public Task<bool> Add(Customer customer);
+        public Task<bool> Delete(int id);
+        public Task<bool> Update(Customer customer);
     }
     public class CustomerReposity : ICustomerReposity
     {
-        public bool Add(Customer customer)
+        public async Task<bool> Add(Customer customer)
         {
-            return CustomerDAO.Instance.Add(customer);
+            return await CustomerDAO.Instance.Add(customer);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return CustomerDAO.Instance.Delete(id);
+            return await CustomerDAO.Instance.Delete(id);
         }
 
-        public List<Customer> getAll()
+        public async Task<List<Customer>> getAll()
         {
-            return CustomerDAO.Instance.GetAll();
+            return await CustomerDAO.Instance.GetAll();
         }
 
-        public Customer getCustomerById(int id)
+        public async Task<Customer> getCustomerById(int id)
         {
-            return CustomerDAO.Instance.Get(id);
+            return await CustomerDAO.Instance.Get(id);
         }
 
-        public bool Update(Customer customer)
+        public async Task<bool> Update(Customer customer)
         {
-            return CustomerDAO.Instance.Update(customer);
+            return await CustomerDAO.Instance.Update(customer);
         }
     }
 }

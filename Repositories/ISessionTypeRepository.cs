@@ -10,38 +10,38 @@ namespace Repositories
 {
     public interface ISessionTypeRepository
     {
-        public bool DeleteSessionType(int id);
-        public List<SessionType> GetSessionTypes();
-        public SessionType GetSessionType(int id);
-        public bool AddSessionType(SessionType sessionType);
-        public bool UpdateSessionType(SessionType sessionType);
+        public Task<bool> DeleteSessionType(int id);
+        public Task<List<SessionType>> GetSessionTypes();
+        public Task<SessionType> GetSessionType(int id);
+        public Task<bool> AddSessionType(SessionType sessionType);
+        public Task<bool> UpdateSessionType(SessionType sessionType);
 
     }
     public class SessionTypeRepository : ISessionTypeRepository
     {
-        public bool AddSessionType(SessionType sessionType)
+        public async Task<bool> AddSessionType(SessionType sessionType)
         {
-           return SessionTypeDAO.Instance.AddSessionType(sessionType);
+           return await SessionTypeDAO.Instance.AddSessionType(sessionType);
         }
 
-        public bool DeleteSessionType(int id)
+        public async Task<bool> DeleteSessionType(int id)
         {
-            return SessionTypeDAO.Instance.DeleteSessionType(id);
+            return await SessionTypeDAO.Instance.DeleteSessionType(id);
         }
 
-        public SessionType GetSessionType(int id)
+        public async Task<SessionType> GetSessionType(int id)
         {
-            return SessionTypeDAO.Instance.GetSessionTypeById(id);
+            return await SessionTypeDAO.Instance.GetSessionTypeById(id);
         }
 
-        public List<SessionType> GetSessionTypes()
+        public async Task<List<SessionType>> GetSessionTypes()
         {
-            return SessionTypeDAO.Instance.GetSessionTypes();
+            return await SessionTypeDAO.Instance.GetSessionTypes();
         }
 
-        public bool UpdateSessionType(SessionType sessionType)
+        public async Task<bool> UpdateSessionType(SessionType sessionType)
         {
-            return SessionTypeDAO.Instance.UpdateSessionType(sessionType);
+            return await SessionTypeDAO.Instance.UpdateSessionType(sessionType);
         }
     }
 }

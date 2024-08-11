@@ -28,16 +28,16 @@ namespace DataAccessLayers
             context = new TarotBookingContext();
         }
 
-        public List<Customer> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
-            return context.Customers.ToList();
+            return  context.Customers.ToList();
         }
-        public Customer Get(int id)
+        public async Task<Customer> Get(int id)
         {
             return context.Customers.Where(x => x.UserId == id).FirstOrDefault();
 
         }
-        public bool Add(Customer customer)
+        public async Task<bool> Add(Customer customer)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool Update(Customer customer)
+        public async Task<bool> Update(Customer customer)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {

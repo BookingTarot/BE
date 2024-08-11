@@ -12,12 +12,12 @@ namespace Services
 {
     public interface ITarotReaderService
     {
-        public List<TarotReaderResponse> getAll(GetListTarotReaderRequest request);
-        public TarotReaderResponse getTarotReaderById(int id);
-        public bool Add(TarotReaderRequest tarotReader);
-        public bool Delete(int id);
-        public bool Update(TarotReaderRequest tarotReader);
-        public bool AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader);
+        public Task<List<TarotReaderResponse>> getAll(GetListTarotReaderRequest request);
+        public Task<TarotReaderResponse> getTarotReaderById(int id);
+        public Task<bool> Add(TarotReaderRequest tarotReader);
+        public Task<bool> Delete(int id);
+        public Task<bool> Update(TarotReaderRequest tarotReader);
+        public Task<bool> AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader);
     }
     public class TarotReaderService : ITarotReaderService
     {
@@ -33,7 +33,7 @@ namespace Services
             
         }
 
-        public bool Add(TarotReaderRequest tarotReader)
+        public async Task<bool> Add(TarotReaderRequest tarotReader)
         {
             var request = new TarotReader
             {
@@ -45,21 +45,21 @@ namespace Services
                 Image = tarotReader.Image,
                 Status = tarotReader.Status
             };
-            return _repo.Add(request);
+            return await _repo.Add(request);
         }
 
-        public bool AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader)
+        public async Task<bool> AddSessionTypeToTarotReader(SessionTypeToTarotReaderRequest sessionTypeToTarotReader)
         {
-            var tarotReader = _repo.GetTarot(sessionTypeToTarotReader.TarotReaderId);
+            var tarotReader = await _repo.GetTarot(sessionTypeToTarotReader.TarotReaderId);
             if (tarotReader != null)
             {
 
 
-                var sessionType = _sessionTypeRepository.GetSessionType(sessionTypeToTarotReader.SessionTypeId);
+                var sessionType = await _sessionTypeRepository.GetSessionType(sessionTypeToTarotReader.SessionTypeId);
                 if (sessionType != null)
                 {
                     tarotReader.SessionTypes.Add(sessionType);
-                    return _repo.Save();
+                    return await _repo.Update(tarotReader);
                 }
                 
             }
@@ -67,15 +67,15 @@ namespace Services
 
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repo.Delete(id);
+            return await _repo.Delete(id);
         }
 
-        public List<TarotReaderResponse> getAll(GetListTarotReaderRequest request)
+        public async Task<List<TarotReaderResponse>> getAll(GetListTarotReaderRequest request)
         {   
             
-            var tarotReaders = (_repo.getAll()).AsQueryable();
+            var tarotReaders = (await _repo.getAll()).AsQueryable();
             if (!string.IsNullOrEmpty(request.Kind))
             {
                 tarotReaders = tarotReaders.Where(x => x.Kind.Contains(request.Kind));
@@ -85,7 +85,18 @@ namespace Services
                 tarotReaders = tarotReaders.Where(x => x.Experience.Contains(request.Experience));
             }
             var tarotReaderResponses = new List<TarotReaderResponse>();
-            foreach(var tarotReader in tarotReaders)
+            var tarotReaderIds = tarotReaders.Select(x => x.TarotReaderId).ToList();
+            var imageDict = new Dictionary<int, byte[]>();
+
+            foreach (var id in tarotReaderIds)
+            {
+                var image = await _repo.GetImage(id);
+                if (image != null)
+                {
+                    imageDict[id] = image;
+                }
+            }
+            foreach (var tarotReader in tarotReaders)
             {
                 TarotReaderResponse tarotReaderResponse = new TarotReaderResponse
                 {
@@ -96,7 +107,7 @@ namespace Services
                     Description = tarotReader.Description,
                     Experience = tarotReader.Experience,
                     Kind = tarotReader.Kind,
-                    Image = tarotReader.Image,
+                    Image = imageDict.ContainsKey(tarotReader.TarotReaderId) ? imageDict[tarotReader.TarotReaderId] : null,
                     Status = tarotReader.Status,
                     Schedules = tarotReader.Schedules.ToList(),
                     
@@ -107,9 +118,9 @@ namespace Services
             return tarotReaderResponses;
         }
 
-        public TarotReaderResponse getTarotReaderById(int id)
+        public async Task<TarotReaderResponse> getTarotReaderById(int id)
         {
-            var tarotReader = _repo.getTarotReaderById(id);
+            var tarotReader = await _repo.getTarotReaderById(id);
             TarotReaderResponse tarotReaderResponse = new TarotReaderResponse
             {
                 TarotReaderId = tarotReader.TarotReaderId,
@@ -128,16 +139,16 @@ namespace Services
             return tarotReaderResponse;
         }
 
-        public bool Update(TarotReaderRequest tarotReader)
+        public async Task<bool> Update(TarotReaderRequest tarotReader)
         {
-            var request = _repo.getTarotReaderById(tarotReader.TarotReaderId);
+            var request = await _repo.getTarotReaderById(tarotReader.TarotReaderId);
             request.Introduction = tarotReader.Introduction;
             request.Description = tarotReader.Description;
             request.Experience = tarotReader.Experience;
             request.Kind = tarotReader.Kind;
             request.Image = tarotReader.Image;
             request.Status = tarotReader.Status;
-            return _repo.Update(request);
+            return await _repo.Update(request);
         }
     }
 }

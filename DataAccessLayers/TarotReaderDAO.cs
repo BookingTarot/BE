@@ -28,9 +28,10 @@ namespace DataAccessLayers
             context = new TarotBookingContext();
         }
 
-        public List<TarotReader> getAll() {
-            return context.TarotReaders
-                
+        public async Task<List<TarotReader>> getAll()
+        {
+            return await context.TarotReaders
+        .AsNoTracking()
                 .Select(tr => new TarotReader
                 {
                     TarotReaderId = tr.TarotReaderId,
@@ -39,26 +40,23 @@ namespace DataAccessLayers
                     Description = tr.Description,
                     Kind = tr.Kind,
                     Experience = tr.Experience,
-                    Image = tr.Image,
+                    //Image = tr.Image,
                     Status = tr.Status,
                     User = new User
                     {
                         UserId = tr.User.UserId,
                         LastName = tr.User.LastName,
                         FirstName = tr.User.FirstName,
-                       
-                    },
+                    }
+                    ,
                     Schedules = tr.Schedules.Select(sc => new Schedule
                     {
                         ScheduleId = sc.ScheduleId,
+                        TarotReaderId = tr.TarotReaderId,
                         Date = sc.Date,
-                        StartTime = sc.StartTime, EndTime = sc.EndTime,
-                        
-                        
-
-
-                    }).ToList()
-                    ,
+                        StartTime = sc.StartTime,
+                        EndTime = sc.EndTime,
+                    }).ToList(),
                     SessionTypes = tr.SessionTypes.Select(st => new SessionType
                     {
                         SessionTypeId = st.SessionTypeId,
@@ -66,18 +64,25 @@ namespace DataAccessLayers
                         Description = st.Description,
                         Price = st.Price,
                         Status = st.Status,
-                        Duration = st.Duration
-                    }).ToList()
-
-
+                        Duration = st.Duration,
+                    }).ToList(),
                 })
-                .ToList();
+                .ToListAsync();
         }
-        public TarotReader GetTarot(int id)
+
+        public async Task<byte[]> GetImage(int id)
+        {
+            return await context.TarotReaders
+                .AsNoTracking()
+                .Where(tr => tr.TarotReaderId == id)
+                .Select(tr => tr.Image)
+                .FirstOrDefaultAsync();
+        }
+        public async Task<TarotReader> GetTarot(int id)
         {
             return context.TarotReaders.Include(tr => tr.SessionTypes).Where(tr => tr.TarotReaderId == id).FirstOrDefault();
         }
-        public TarotReader GetTarotReaderById(int id)
+        public async Task<TarotReader> GetTarotReaderById(int id)
         {
             return context.TarotReaders
                 .Where(tr => tr.TarotReaderId == id)
@@ -96,10 +101,12 @@ namespace DataAccessLayers
                         UserId = tr.User.UserId,
                         LastName = tr.User.LastName,
                         FirstName = tr.User.FirstName,
-                    },
+                    }
+                    ,
                     Schedules = tr.Schedules.Select(tr => new Schedule
                     {
                         ScheduleId = tr.ScheduleId,
+                        TarotReaderId = tr.TarotReaderId,
                         Date = tr.Date,
                         StartTime = tr.StartTime,
                         EndTime = tr.EndTime,
@@ -119,7 +126,7 @@ namespace DataAccessLayers
                 .FirstOrDefault();
         }
 
-        public bool Add(TarotReader tarotReader)
+        public async Task<bool> Add(TarotReader tarotReader)
         {
             try
             {
@@ -133,7 +140,7 @@ namespace DataAccessLayers
             }
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
@@ -147,11 +154,11 @@ namespace DataAccessLayers
                 return false;
             }
         }
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
             return context.SaveChanges() > 0;
         }
-        public bool Update(TarotReader tarotReader)
+        public async Task<bool> Update(TarotReader tarotReader)
         {
             
                 

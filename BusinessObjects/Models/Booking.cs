@@ -19,6 +19,7 @@ namespace BusinessObjects.Models
         public string? Description { get; set; }
         public int ScheduleId { get; set; }
         public int SessionTypeId { get; set; }
+        public string? LinkMeet { get; set; }
 
         public virtual Customer Customer { get; set; } = null!;
         public virtual Schedule Schedule { get; set; } = null!;

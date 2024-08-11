@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Net.payOS;
 using Net.payOS.Types;
+using Net.payOS.Utils;
 using Services;
 
 namespace Presentation.Controllers
@@ -26,11 +27,11 @@ namespace Presentation.Controllers
         {
             try
             {
-                var booking = _bookingService.GetBooking(request.bookingId);
+                var booking = await _bookingService.GetBooking(request.bookingId);
                 //int orderCode = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
                 ItemData item = new ItemData(booking.Description, 1, Convert.ToInt32(booking.Amount * 1000));
                 List<ItemData> items = new List<ItemData> { item };
-                PaymentData paymentData = new PaymentData(booking.BookingId, Convert.ToInt32(booking.Amount * 1000), booking.CustomerName +" Thanh Toán"  , items, request.cancelUrl, request.returnUrl);
+                PaymentData paymentData = new PaymentData(booking.BookingId, Convert.ToInt32(booking.Amount * 1000),"", items, request.cancelUrl, request.returnUrl);
 
                 CreatePaymentResult createPayment = await _payOS.createPaymentLink(paymentData);
 
@@ -46,8 +47,10 @@ namespace Presentation.Controllers
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrder([FromRoute] int orderId)
         {
+
             try
             {
+                //string paymentLinkResSignature = SignatureControl.CreateSignatureFromObj(dataJson, _checksumKey);
                 PaymentLinkInformation paymentLinkInformation = await _payOS.getPaymentLinkInformation(orderId);
                 return Ok(new Response(0, "Ok", paymentLinkInformation));
             }

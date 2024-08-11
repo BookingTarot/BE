@@ -11,12 +11,12 @@ namespace Services
 {
     public interface  IFeedbackService
     {
-        public bool AddFeedback(FeedBackRequest feedback);
-        public List<Feedback> GetFeedbacks();
-        public Feedback GetFeedbackById(int id);
-        public bool UpdateFeedback(int id,FeedBackRequest feedback);
-        public bool DeleteFeedback(int id);
-        public List<Feedback> GetFeedbacksByTarotReaderId(int id);
+        public Task<bool> AddFeedback(FeedBackRequest feedback);
+        public Task<List<Feedback>> GetFeedbacks();
+        public Task<Feedback> GetFeedbackById(int id);
+        public Task<bool> UpdateFeedback(int id,FeedBackRequest feedback);
+        public Task<bool> DeleteFeedback(int id);
+        public Task<List<Feedback>> GetFeedbacksByTarotReaderId(int id);
     }
 
     public class FeedbackService : IFeedbackService
@@ -26,7 +26,7 @@ namespace Services
         {
             _repo = repo;
         }
-        public bool AddFeedback(FeedBackRequest request)
+        public async Task<bool> AddFeedback(FeedBackRequest request)
         {
             var feedback = new Feedback();
             feedback.CustomerId = request.CustomerId;
@@ -36,42 +36,42 @@ namespace Services
             feedback.Date = DateTime.Now;
 
 
-            _repo.AddFeedback(feedback);
+            await _repo.AddFeedback(feedback);
             return true;
 
         }
 
-        public bool DeleteFeedback(int id)
+        public async Task<bool> DeleteFeedback(int id)
         {
-            return _repo.DeleteFeedback(id);
+            return await _repo.DeleteFeedback(id);
         }
 
-        public Feedback GetFeedbackById(int id)
+        public async Task<Feedback> GetFeedbackById(int id)
         {
-           return _repo.GetFeedbackById(id);
+           return await _repo.GetFeedbackById(id);
         }
 
-        public List<Feedback> GetFeedbacks()
+        public async Task<List<Feedback>> GetFeedbacks()
         {
-            return _repo.GetFeedbacks();
+            return await _repo.GetFeedbacks();
         }
 
-        public List<Feedback> GetFeedbacksByTarotReaderId(int id)
+        public async Task<List<Feedback>> GetFeedbacksByTarotReaderId(int id)
         {
-            return _repo.GetFeedbacksByTarotReaderId(id);
+            return await _repo.GetFeedbacksByTarotReaderId(id);
         }
 
         
 
-        public bool UpdateFeedback(int id, FeedBackRequest request)
+        public async Task<bool> UpdateFeedback(int id, FeedBackRequest request)
         {
-            var feedback = _repo.GetFeedbackById(id);
+            var feedback = await _repo.GetFeedbackById(id);
             feedback.FeedbackId = id;
             feedback.CustomerId = request.CustomerId;
             feedback.TarotReaderId = request.TarotReaderId;
             feedback.Rating = request.Rating;
             feedback.Comments = request.Comments;
-            return _repo.UpdateFeedback(feedback);
+            return await _repo.UpdateFeedback(feedback);
 
         }
     }

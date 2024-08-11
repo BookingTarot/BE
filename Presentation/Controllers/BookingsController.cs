@@ -18,15 +18,15 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetBookings([FromQuery] GetListBookingRequest request)
+        public async Task<IActionResult> GetBookings([FromQuery] GetListBookingRequest request)
         {
-            return Ok(_service.GetBookings(request));
+            return Ok(await _service.GetBookings(request));
         }
 
         [HttpPost()]
-        public  IActionResult AddBooking([FromBody] BookingRequest booking)
+        public  async Task<IActionResult> AddBooking([FromBody] BookingRequest booking)
         {
-            var response =  _service.AddBooking(booking);
+            var response = await  _service.AddBooking(booking);
             if (response != null)
             {
                 return Ok(response);
@@ -35,9 +35,9 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteBooking(int id)
+        public async Task<IActionResult> DeleteBooking(int id)
         {
-            var response = _service.DeleteBooking(id);
+            var response = await _service.DeleteBooking(id);
             if (response != null)
             {
                 return Ok(response);
@@ -46,14 +46,14 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBooking(int id)
+        public async Task<IActionResult> GetBooking(int id)
         {
-            return Ok(_service.GetBooking(id));
+            return Ok(await _service.GetBooking(id));
         }
         [HttpPut]
-        public IActionResult UpdateBooking([FromBody] BookingRequest booking)
+        public async Task<IActionResult> UpdateBooking([FromBody] BookingRequest booking)
         {
-            var response = _service.UpdateBooking(booking);
+            var response = await _service.UpdateBooking(booking);
             if (response != null)
             {
                 return Ok(response);

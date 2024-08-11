@@ -10,51 +10,58 @@ namespace Repositories
 {
     public interface ITarotReaderRepository
     {
-        public List<TarotReader> getAll();
-        public TarotReader getTarotReaderById(int id);
-        public TarotReader GetTarot(int id);
-        public bool Add(TarotReader tarotReader);
-        public bool Delete(int id);
-        public bool Update(TarotReader tarotReader);
-        public bool Save();
-        
+        public Task<List<TarotReader>> getAll();
+        public Task<TarotReader> getTarotReaderById(int id);
+        public Task<TarotReader> GetTarot(int id);
+        public Task<bool> Add(TarotReader tarotReader);
+        public Task<bool> Delete(int id);
+        public Task<bool> Update(TarotReader tarotReader);
+        public Task<bool> Save();
+        Task<byte[]> GetImage(int id);
+
+
     }
 
     public class TarotReaderRepository : ITarotReaderRepository
     {
-        public bool Add(TarotReader tarotReader)
+        public async Task<bool> Add(TarotReader tarotReader)
         {
-            return TarotReaderDAO.Instance.Add(tarotReader);
+            return await TarotReaderDAO.Instance.Add(tarotReader);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return TarotReaderDAO.Instance.Delete(id);
+            return await TarotReaderDAO.Instance.Delete(id);
         }
 
-        public List<TarotReader> getAll()
+        public async Task<List<TarotReader>> getAll()
         {
-            return TarotReaderDAO.Instance.getAll();
+            return await TarotReaderDAO.Instance.getAll();
         }
 
-        public TarotReader GetTarot(int id)
+        public async Task<byte[]> GetImage(int id)
         {
-            return TarotReaderDAO.Instance.GetTarot(id);
+            return await TarotReaderDAO.Instance.GetImage(id);
         }
 
-        public TarotReader getTarotReaderById(int id)
+        public async Task<TarotReader> GetTarot(int id)
         {
-            return TarotReaderDAO.Instance.GetTarotReaderById(id);
+            return await TarotReaderDAO.Instance.GetTarot(id);
         }
 
-        public bool Save()
+        public async Task<TarotReader> getTarotReaderById(int id)
         {
-            return TarotReaderDAO.Instance.SaveChanges();
+            return await TarotReaderDAO.Instance.GetTarotReaderById(id);
         }
 
-        public bool Update(TarotReader tarotReader)
+        public async Task<bool> Save()
         {
-            return TarotReaderDAO.Instance.Update(tarotReader);
+            return await TarotReaderDAO.Instance.SaveChanges();
+        }
+
+        public async Task<bool> Update(TarotReader tarotReader)
+        {
+            return await TarotReaderDAO.Instance.Update(tarotReader);
         }
     }
 }

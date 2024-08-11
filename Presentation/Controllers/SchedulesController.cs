@@ -16,24 +16,24 @@ namespace Presentation.Controllers
             _service = service;
         }
         [HttpGet]
-        public IActionResult GetSchedules()
+        public async Task<IActionResult> GetSchedules()
         {
-            return Ok(_service.GetAll());
+            return Ok(await _service.GetAll());
         }
         [HttpGet("tarot/{tarotReaderId}")]
-        public IActionResult GetSchedulesByTarotReaderId(int tarotReaderId)
+        public async Task<IActionResult> GetSchedulesByTarotReaderId(int tarotReaderId)
         {
-            return Ok(_service.GetSchedulesByTarotReaderId(tarotReaderId));
+            return Ok(await _service.GetSchedulesByTarotReaderId(tarotReaderId));
         }
         [HttpGet("{id}")]
-        public IActionResult GetSchedule(int id)
+        public async Task<IActionResult> GetSchedule(int id)
         {
-            return Ok(_service.GetScheduleById(id));
+            return Ok(await _service.GetScheduleById(id));
         }
         [HttpPost]
-        public IActionResult AddSchedule([FromBody] ScheduleRequest schedule)
+        public async Task<IActionResult> AddSchedule([FromBody] ScheduleRequest schedule)
         {
-            var response = _service.AddSchedule(schedule);
+            var response = await _service.AddSchedule(schedule);
             if (response != null)
             {
                 return Ok(response);
@@ -41,9 +41,9 @@ namespace Presentation.Controllers
             return BadRequest();
         }
         [HttpPut]
-        public IActionResult UpdateSchedule([FromBody] ScheduleRequest schedule)
+        public async Task<IActionResult> UpdateSchedule([FromBody] ScheduleRequest schedule)
         {
-            var response = _service.UpdateSchedule(schedule);
+            var response = await _service.UpdateSchedule(schedule);
             if (response != null)
             {
                 return Ok(response);
@@ -51,9 +51,9 @@ namespace Presentation.Controllers
             return BadRequest();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteSchedule(int id)
+        public async Task<IActionResult> DeleteSchedule(int id)
         {
-            if (_service.Delete(id))
+            if (await _service.Delete(id))
             {
                 return Ok();
             }

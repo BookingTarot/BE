@@ -13,8 +13,10 @@ namespace BusinessObjects.DTOs.Request
         public int TarotReaderId { get; set; }
         public double? Amount { get; set; }
         public string? Description { get; set; }
+        public DateTime? Date { get; set; }
         public int ScheduleId { get; set; }
         public int SessionTypeId { get; set; }
         public bool Status { get; set; }
+        public string? LinkMeet { get; set; }
     }
 }

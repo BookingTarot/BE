@@ -11,49 +11,55 @@ namespace Repositories
 {
     public interface IUserRepository
     {
-        public User Login(string email, string password);
-        public bool RegisterUser(User user);
-        public List<User> GetAll();
-        public User GetById(int id);
-        public bool Update(User user);
-        public bool Delete(int id);
-        public User Add(User user);
+        public Task<User> Login(string email, string password);
+        public Task<bool> RegisterUser(User user);
+        public Task<List<User>> GetAll();
+        public Task<User> GetById(int id);
+        public Task<bool> Update(User user);
+        public Task<bool> Delete(int id);
+        public Task<User> Add(User user);
+        public Task<bool> UpdateRole(int id, int roleId);
     }
     public class UserRepository : IUserRepository
     {
-        public User Add(User user)
+        public async Task<User> Add(User user)
         {
-            return UserDAO.Instance.CreateUser(user);
+            return await UserDAO.Instance.CreateUser(user);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return UserDAO.Instance.DeleteUser(id);
+            return await UserDAO.Instance.DeleteUser(id);
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return UserDAO.Instance.GetUsers();
+            return await UserDAO.Instance.GetUsers();
         }
 
-        public User GetById(int id)
+        public async Task<User> GetById(int id)
         {
-            return UserDAO.Instance.GetUserById(id);
+            return await UserDAO.Instance.GetUserById(id);
         }
 
-        public User Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
-            return UserDAO.Instance.Login(email, password);
+            return await UserDAO.Instance.Login(email, password);
         }
 
-        public bool RegisterUser(User user)
+        public async Task<bool> RegisterUser(User user)
         {
-           return UserDAO.Instance.RegisterUser(user);
+           return await UserDAO.Instance.RegisterUser(user);
         }
 
-        public bool Update(User user)
+        public async Task<bool> Update(User user)
         {
-            return UserDAO.Instance.UpdateUser(user);
+            return await UserDAO.Instance.UpdateUser(user);
+        }
+
+        public  async Task<bool> UpdateRole(int id, int roleId)
+        {
+            return await UserDAO.Instance.UpdateRole(id, roleId);
         }
     }
 }

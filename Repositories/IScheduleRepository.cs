@@ -10,44 +10,44 @@ namespace Repositories
 {
     public interface IScheduleRepository
     {
-        public bool AddSchedule(Schedule schedule);
-        public bool UpdateSchedule(Schedule schedule);
-        public bool Delete(int id);
-        public List<Schedule> GetAll();
-        public Schedule GetScheduleById(int id);
-        public List<Schedule> GetSchedulesByTarotReaderId(int id);
+        public Task<bool> AddSchedule(Schedule schedule);
+        public Task<bool> UpdateSchedule(Schedule schedule);
+        public Task<bool> Delete(int id);
+        public Task<List<Schedule>> GetAll();
+        public Task<Schedule> GetScheduleById(int id);
+        public Task<List<Schedule>> GetSchedulesByTarotReaderId(int id);
     }
 
     public class ScheduleRepository : IScheduleRepository
     {
-        public bool AddSchedule(Schedule schedule)
+        public async Task<bool> AddSchedule(Schedule schedule)
         {
-            return ScheduleDAO.Instance.AddSchedule(schedule);
+            return await ScheduleDAO.Instance.AddSchedule(schedule);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return ScheduleDAO.Instance.Delete(id);
+            return await ScheduleDAO.Instance.Delete(id);
         }
 
-        public List<Schedule> GetAll()
+        public async Task<List<Schedule>> GetAll()
         {
-            return ScheduleDAO.Instance.GetAll();
+            return await ScheduleDAO.Instance.GetAll();
         }
 
-        public Schedule GetScheduleById(int id)
+        public async Task<Schedule> GetScheduleById(int id)
         {
-           return ScheduleDAO.Instance.GetScheduleById(id);
+           return await ScheduleDAO.Instance.GetScheduleById(id);
         }
 
-        public List<Schedule> GetSchedulesByTarotReaderId(int id)
+        public async Task<List<Schedule>> GetSchedulesByTarotReaderId(int id)
         {
-            return ScheduleDAO.Instance.GetSchedulesByTarotReaderId(id);
+            return await ScheduleDAO.Instance.GetSchedulesByTarotReaderId(id);
         }
 
-        public bool UpdateSchedule(Schedule schedule)
+        public async Task<bool> UpdateSchedule(Schedule schedule)
         {
-            return ScheduleDAO.Instance.UpdateSchedule(schedule);
+            return await ScheduleDAO.Instance.UpdateSchedule(schedule);
         }
     }
 }

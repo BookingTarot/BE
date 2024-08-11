@@ -1,4 +1,8 @@
-﻿using Repositories;
+﻿using BusinessObjects.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories;
 using Services;
 
 namespace Presentation
@@ -38,8 +42,7 @@ namespace Presentation
                                .AllowCredentials();
                     });
             });
-
-
+            
 
             services.AddSwaggerGen();
         }

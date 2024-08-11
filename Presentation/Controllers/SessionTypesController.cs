@@ -21,32 +21,32 @@ namespace Presentation.Controllers
             return Ok(_service.GetSessionTypes());
         }
         [HttpGet("{id}")]
-        public IActionResult GetSessionType(int id)
+        public async Task<IActionResult> GetSessionType(int id)
         {
-            return Ok(_service.GetSessionType(id));
+            return Ok(await _service.GetSessionType(id));
         }
         [HttpPost]
-        public IActionResult AddSessionType([FromBody] SessionTypeRequest sessionType)
+        public async Task<IActionResult> AddSessionType([FromBody] SessionTypeRequest sessionType)
         {
-            if (_service.AddSessionType(sessionType))
+            if (await _service.AddSessionType(sessionType))
             {
                 return Ok();
             }
             return BadRequest();
         }
         [HttpPut]
-        public IActionResult UpdateSessionType([FromBody] SessionTypeRequest sessionType)
+        public async Task<IActionResult> UpdateSessionType([FromBody] SessionTypeRequest sessionType)
         {
-            if (_service.UpdateSessionType(sessionType))
+            if (await _service.UpdateSessionType(sessionType))
             {
                 return Ok();
             }
             return BadRequest();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteSessionType(int id)
+        public async Task<IActionResult> DeleteSessionType(int id)
         {
-            if (_service.DeleteSessionType(id))
+            if (await _service.DeleteSessionType(id))
             {
                 return Ok();
             }

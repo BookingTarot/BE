@@ -18,9 +18,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetListUser()
+        public async Task<IActionResult> GetListUser()
         {
-            var reponse = _service.GetAll();
+            var reponse = await _service.GetAll();
             if (reponse == null)
             {
                 return NotFound();
@@ -28,9 +28,9 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest loginRequest)
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var reponse = _service.Login(loginRequest.Email, loginRequest.Password);
+            var reponse = await _service.Login(loginRequest.Email, loginRequest.Password);
             if (reponse == null)
             {
                 return NotFound();
@@ -39,9 +39,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("register-customer")]
-        public IActionResult RegisterCustomer(RegisterRequest registerRequest)
+        public async Task<IActionResult> RegisterCustomer(RegisterRequest registerRequest)
         {
-            var reponse = _service.RegisterCustomer(registerRequest);
+            var reponse = await _service.RegisterCustomer(registerRequest);
             if (reponse == null)
             {
                 return NotFound();
@@ -49,9 +49,9 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpPost("register-tarotreader")]
-        public IActionResult RegisterTarotReader(RegisterTarotReaderRequest registerRequest)
+        public async Task<IActionResult> RegisterTarotReader(RegisterTarotReaderRequest registerRequest)
         {
-            var reponse = _service.RegisterTarotReader(registerRequest);
+            var reponse = await _service.RegisterTarotReader(registerRequest);
             if (reponse == null)
             {
                 return NotFound();
@@ -60,9 +60,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
-            var reponse = _service.GetById(id);
+            var reponse = await _service.GetById(id);
             if (reponse == null)
             {
                 return NotFound();
@@ -70,9 +70,19 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpPut()]
-        public IActionResult UpdateUser(UserRequest user)
+        public async Task<IActionResult> UpdateUser(UserRequest user)
         {
-            var reponse = _service.Update(user);
+            var reponse = await _service.Update(user);
+            if (reponse == null)
+            {
+                return NotFound();
+            }
+            return Ok(reponse);
+        }
+        [HttpPut("{id}/{roleId}")]
+        public async Task<IActionResult> UpdateRole(int id, int roleId)
+        {
+            var reponse = await _service.UpdateRole(id, roleId);
             if (reponse == null)
             {
                 return NotFound();
@@ -80,9 +90,9 @@ namespace Presentation.Controllers
             return Ok(reponse);
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var reponse = _service.Delete(id);
+            var reponse = await _service.Delete(id);
             if (reponse == null)
             {
                 return NotFound();
